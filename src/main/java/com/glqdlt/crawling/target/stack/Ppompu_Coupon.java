@@ -2,6 +2,7 @@ package com.glqdlt.crawling.target.stack;
 
 public class Ppompu_Coupon implements CrawllingTarget {
 
+	
 	private int site_tag;
 	private int data_tag;
 	private String site_name;
@@ -44,6 +45,5 @@ public class Ppompu_Coupon implements CrawllingTarget {
 	public String get_target_url() {
 		return target_url;
 	}
-
 
 }
