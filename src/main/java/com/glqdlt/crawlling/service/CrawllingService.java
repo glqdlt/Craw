@@ -1,6 +1,13 @@
 package com.glqdlt.crawlling.service;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,45 +25,74 @@ import com.glqdlt.crawling.target.PpompuCoupon;
 import com.glqdlt.crawling.target.Ruriweb;
 import com.glqdlt.crawling.target.YepannetTukga;
 import com.glqdlt.crawling.target.YepannetYepan;
-import com.glqdlt.persistence.data.CrawllingObject;
-import com.glqdlt.persistence.repository.CrawllingRepository;
+import com.glqdlt.persistence.data.CrawllingRawDataDomain;
+import com.glqdlt.persistence.data.CrawllingTargetDomain;
+import com.glqdlt.persistence.repository.CrawllingRawDataRepository;
 
 @Service
 public class CrawllingService {
 
-	@Autowired
-	CoolenjoyNewsParser cNewsParser;
 
 	@Autowired
-	CoolenjoyTukgaParser ctukgaParser;
+	CrawllingRawDataRepository cRepo;
 
 	@Autowired
-	RuriwebParser rParser;
-
-	@Autowired
-	PpompuParser pParser;
-
-	@Autowired
-	YepannetParser yParser;
-
-	@Autowired
-	CrawllingRepository cRepo;
+	JobSchuduleService jsService;
 
 	private static final Logger log = LoggerFactory.getLogger(CrawllingService.class);
 
-	public void StartJob() {
+	public void jobRunner() {
+		ExecutorService exePool = Executors.newCachedThreadPool();
+		List<CrawllingTargetDomain> list = jsService.getAllCrawllingTargets();
+		List<Future<List<CrawllingRawDataDomain>>> futurePool = new ArrayList<>();
 
-		cNewsParser.startJob(CoolenjoyNews.target_url).forEach(x -> cRepo.save(x));
+		for (CrawllingTargetDomain crawllingTarget : list) {
 
-		ctukgaParser.startJob(CoolenjoyTukga.target_url).forEach(x -> cRepo.save(x));
+			if (crawllingTarget.getNo() == 1) {
+				Future<List<CrawllingRawDataDomain>> f1 = exePool.submit(new RuriwebParser(crawllingTarget));
+				futurePool.add(f1);
+			}
 
-		rParser.startJob(Ruriweb.target_url).forEach(x -> cRepo.save(x));
+			if (crawllingTarget.getNo() == 2) {
+				Future<List<CrawllingRawDataDomain>> f2 = exePool.submit(new CoolenjoyNewsParser(crawllingTarget));
+				futurePool.add(f2);
 
-		pParser.startJob(PpompuCoupon.target_url).forEach(x -> cRepo.save(x));
+			}
 
-		yParser.startJob(YepannetTukga.target_url).forEach(x -> cRepo.save(x));
+			if (crawllingTarget.getNo() == 3) {
+				Future<List<CrawllingRawDataDomain>> f3 = exePool.submit(new CoolenjoyTukgaParser(crawllingTarget));
+				futurePool.add(f3);
 
-		yParser.startJob(YepannetYepan.target_url).forEach(x -> cRepo.save(x));
+			}
+
+			if (crawllingTarget.getNo() == 4) {
+
+			}
+
+			if (crawllingTarget.getNo() == 5) {
+
+			}
+
+			if (crawllingTarget.getNo() == 6) {
+
+			}
+
+			if (crawllingTarget.getNo() == 7) {
+
+			}
+
+		}
+
+		for (Future<List<CrawllingRawDataDomain>> future : futurePool) {
+			try {
+				cRepo.save(future.get());
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			} catch (ExecutionException e) {
+				e.printStackTrace();
+			}
+
+		}
 
 		log.info("done");
 

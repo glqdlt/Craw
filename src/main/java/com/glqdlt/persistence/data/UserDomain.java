@@ -21,8 +21,16 @@ public class UserDomain {
 		this.no = no;
 	}
 
+	private String id;
 	private String name;
+	private String n_name;
 	private String email;
+	private Integer role;
+	private boolean listen_mail;
+	private String password;
+	
+	
+	
 
 	public String getName() {
 		return name;

@@ -14,7 +14,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-import com.glqdlt.persistence.data.CrawllingObject;
+import com.glqdlt.persistence.data.CrawllingRawDataDomain;
+import com.glqdlt.persistence.data.CrawllingTargetDomain;
 
 
 @Component
@@ -23,8 +24,8 @@ public class PpompuParser extends DefaultParser {
 	private static final Logger log = LoggerFactory.getLogger(PpompuParser.class);
 
 	@Override
-	public List<CrawllingObject> startJob(String url) {
-		List<CrawllingObject> list = new ArrayList<CrawllingObject>();
+	public List<CrawllingRawDataDomain> startJob(CrawllingTargetDomain cDomain) {
+		List<CrawllingRawDataDomain> list = new ArrayList<CrawllingRawDataDomain>();
 
 		int last_column_no = 1;
 
@@ -34,7 +35,7 @@ public class PpompuParser extends DefaultParser {
 		String href = null;
 		Document doc = null;
 		try {
-			doc = Jsoup.connect(url).get();
+			doc = Jsoup.connect(cDomain.getUrl()).get();
 			Element table = doc.select("table[id=revolution_main_table]").get(0);
 			Elements el = table.select("td[class=list_vspace]");
 			for (Element element : el) {
@@ -44,7 +45,7 @@ public class PpompuParser extends DefaultParser {
 					log.debug("find '#' break to continue.");
 					continue;
 				}
-				CrawllingObject CrawVO = new CrawllingObject();
+				CrawllingRawDataDomain CrawVO = new CrawllingRawDataDomain();
 				link = "http://www.ppomppu.co.kr/zboard/" + href;
 				boardNo = boardNoRegex(link);
 

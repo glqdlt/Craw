@@ -3,6 +3,7 @@ package com.glqdlt.crawling.jsoup.parsers;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Callable;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -12,16 +13,27 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-import com.glqdlt.persistence.data.CrawllingObject;
+import com.glqdlt.persistence.data.CrawllingRawDataDomain;
+import com.glqdlt.persistence.data.CrawllingTargetDomain;
 
 
 @Component
-public class CoolenjoyNewsParser extends DefaultParser {
+public class CoolenjoyNewsParser extends DefaultParser implements Callable<List<CrawllingRawDataDomain>> {
 
 	private static final Logger log = LoggerFactory.getLogger(CoolenjoyNewsParser.class);
 
+	CrawllingTargetDomain cDomain;
+	
+	public CoolenjoyNewsParser() {
+	}
+	
+	public CoolenjoyNewsParser(CrawllingTargetDomain cDomain) {
+		this.cDomain = cDomain;
+		
+	}
+	
 	@Override
-	public List<CrawllingObject> startJob(String url) {
+	public List<CrawllingRawDataDomain> startJob(CrawllingTargetDomain cDomain) {
 
 		int lastBoardNo = 1;
 		String subject = null;
@@ -29,13 +41,13 @@ public class CoolenjoyNewsParser extends DefaultParser {
 		String date = null;
 		String boardNo = null;
 
-		List<CrawllingObject> list = new ArrayList<CrawllingObject>();
+		List<CrawllingRawDataDomain> list = new ArrayList<CrawllingRawDataDomain>();
 		try {
-			Document doc = Jsoup.connect(url).get();
+			Document doc = Jsoup.connect(cDomain.getUrl()).get();
 			Elements trElements = doc.getElementsByTag("table").get(0).getElementsByTag("tr");
 
 			for (Element tr : trElements) {
-				CrawllingObject CrawVO = new CrawllingObject();
+				CrawllingRawDataDomain CrawVO = new CrawllingRawDataDomain();
 				Elements tds = tr.getElementsByTag("td");
 
 				if (tds.hasClass("td_subject")) {
@@ -82,6 +94,13 @@ public class CoolenjoyNewsParser extends DefaultParser {
 		};
 		
 		return text;
+	}
+
+
+	@Override
+	public List<CrawllingRawDataDomain> call() throws Exception {
+		
+		return startJob(cDomain);
 	}
 
 }

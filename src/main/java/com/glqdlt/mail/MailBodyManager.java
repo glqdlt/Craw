@@ -5,7 +5,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
 
-import com.glqdlt.persistence.data.CrawllingObject;
+import com.glqdlt.persistence.data.CrawllingRawDataDomain;
 
 public class MailBodyManager {
 	
@@ -29,7 +29,7 @@ public class MailBodyManager {
 	 * @param list
 	 * @return
 	 */
-	private static String HtmlTableMaker(List<CrawllingObject> list) {
+	private static String HtmlTableMaker(List<CrawllingRawDataDomain> list) {
 
 		String table_header = tr + th + list.get(0).getSite_name() + " " + list.get(0).getData_name() +" ("+list.size()+")"+ th2 + tr2;
 		String table_index = tr +td+"순서(최신순)"+td2+  td + "제목" + td2 + tr2;
@@ -37,7 +37,7 @@ public class MailBodyManager {
 		String msg = "";
 
 		int i = 0;
-		for (CrawllingObject c : list) {
+		for (CrawllingRawDataDomain c : list) {
 			i++;
 			msg += tr +td+i+td2+  td + "<a href='" + c.getLink() + "'>"
 					+ CheckLength(c.getSubject()) + "</a>" + td2 +   tr2;
@@ -52,11 +52,11 @@ public class MailBodyManager {
 		return head + table + body + table2 + tail;
 	}
 
-	public static String BodyMaker(List<List<CrawllingObject>> list) {
+	public static String BodyMaker(List<List<CrawllingRawDataDomain>> list) {
 
 		String body = "";
 
-		for (List<CrawllingObject> CDVO : list) {
+		for (List<CrawllingRawDataDomain> CDVO : list) {
 			/**
 			 * 만약 신규 데이터가 없으면 pass 한다.
 			 */

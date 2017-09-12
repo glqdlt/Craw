@@ -8,4 +8,5 @@ public class Ruriweb {
 	public static String data_name = "특가 정보";
 	public static String target_url = "http://bbs.ruliweb.com/market/board/1020";
 
+	public static int craw_type = 1;
 }

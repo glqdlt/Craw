@@ -3,6 +3,7 @@ package com.glqdlt.crawling.jsoup.parsers;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Callable;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -12,16 +13,25 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-import com.glqdlt.persistence.data.CrawllingObject;
+import com.glqdlt.persistence.data.CrawllingRawDataDomain;
+import com.glqdlt.persistence.data.CrawllingTargetDomain;
 
 @Component
-public class RuriwebParser extends DefaultParser {
+public class RuriwebParser extends DefaultParser implements Callable<List<CrawllingRawDataDomain>> {
 
 	private static final Logger log = LoggerFactory.getLogger(RuriwebParser.class);
 
+	public RuriwebParser() {
+		// TODO Auto-generated constructor stub
+	}
+	CrawllingTargetDomain cDomain;
+	public RuriwebParser(CrawllingTargetDomain cDomain) {
+		this.cDomain = cDomain;
+	}
+	
 	@Override
-	public List<CrawllingObject> startJob(String url) {
-		List<CrawllingObject> list = new ArrayList<CrawllingObject>();
+	public List<CrawllingRawDataDomain> startJob(CrawllingTargetDomain cDomain) {
+		List<CrawllingRawDataDomain> list = new ArrayList<CrawllingRawDataDomain>();
 
 		int lastBoardNo = 1;
 
@@ -30,7 +40,7 @@ public class RuriwebParser extends DefaultParser {
 		String link = null;
 		String boardNo = null;
 		try {
-			Document doc = Jsoup.connect(url).get();
+			Document doc = Jsoup.connect(cDomain.getUrl()).get();
 			Elements elemnts = doc.getElementsByClass("board_list_table");
 			elemnts = elemnts.get(0).getElementsByClass("table_body");
 
@@ -38,7 +48,7 @@ public class RuriwebParser extends DefaultParser {
 				Elements elements2 = el.getElementsByClass("table_body");
 				for (Element el2 : elements2) {
 					if (el2.className().equals("table_body")) {
-						CrawllingObject CrawVO = new CrawllingObject();
+						CrawllingRawDataDomain CrawVO = new CrawllingRawDataDomain();
 						link = el.getElementsByClass("subject").get(0).getElementsByClass("deco").attr("href");
 						boardWriteDate = el.getElementsByClass("time").text();
 						subject = el.getElementsByClass("subject").text();
@@ -80,6 +90,11 @@ public class RuriwebParser extends DefaultParser {
 		}
 
 		return text;
+	}
+
+	@Override
+	public List<CrawllingRawDataDomain> call() throws Exception {
+		return startJob(cDomain);
 	}
 
 }

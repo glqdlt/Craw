@@ -15,7 +15,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.glqdlt.crawlling.service.DataService;
-import com.glqdlt.persistence.data.CrawllingObject;
+import com.glqdlt.persistence.data.CrawllingRawDataDomain;
+import com.glqdlt.persistence.data.CrawllingTargetDomain;
 
 @Component
 public abstract class DefaultParser {
@@ -24,7 +25,7 @@ public abstract class DefaultParser {
 	DataService cService;
 	private static final Logger log = LoggerFactory.getLogger(DefaultParser.class);
 
-	public abstract List<CrawllingObject> startJob(String url);
+	public abstract List<CrawllingRawDataDomain> startJob(CrawllingTargetDomain cDomain);
 
 	protected void CheckNewHash() {
 

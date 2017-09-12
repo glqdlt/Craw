@@ -7,5 +7,6 @@ public class CoolenjoyNews {
 	public static String site_name = "쿨엔조이";
 	public static String data_name = "뉴스 정보";
 	public static String target_url = "http://www.coolenjoy.net/bbs/38";
+	public static int craw_type = 1;
 
 }

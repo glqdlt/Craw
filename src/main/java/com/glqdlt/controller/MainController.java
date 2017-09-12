@@ -14,7 +14,7 @@ public class MainController {
 
 	@RequestMapping(value = "/start")
 	public void start() {
-		cService.StartJob();
+		cService.jobRunner();
 	}
 
 	@RequestMapping(value = "/shutdown")

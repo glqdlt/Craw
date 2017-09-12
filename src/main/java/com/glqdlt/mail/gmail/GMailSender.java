@@ -14,7 +14,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 import com.glqdlt.mail.MailBodyManager;
-import com.glqdlt.persistence.data.CrawllingObject;
+import com.glqdlt.persistence.data.CrawllingRawDataDomain;
 import com.glqdlt.persistence.data.UserDomain;
 
 public class GMailSender {
@@ -57,7 +57,7 @@ public class GMailSender {
 		}
 	}
 
-	public static void MailSend(List<List<CrawllingObject>> list, List<UserDomain> to_user_list) {
+	public static void MailSend(List<List<CrawllingRawDataDomain>> list, List<UserDomain> to_user_list) {
 
 		GMailBuilder build = new GMailBuilder();
 
@@ -65,7 +65,7 @@ public class GMailSender {
 		build.setMail_body(html);
 
 		int new_crawlling_data_raw_count = 0;
-		for (List<CrawllingObject> l : list) {
+		for (List<CrawllingRawDataDomain> l : list) {
 			new_crawlling_data_raw_count += l.size();
 
 		}

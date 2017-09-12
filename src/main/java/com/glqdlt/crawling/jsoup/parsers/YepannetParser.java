@@ -16,7 +16,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.glqdlt.crawlling.service.DataService;
-import com.glqdlt.persistence.data.CrawllingObject;
+import com.glqdlt.persistence.data.CrawllingRawDataDomain;
+import com.glqdlt.persistence.data.CrawllingTargetDomain;
 
 @Component
 public class YepannetParser extends DefaultParser {
@@ -28,9 +29,9 @@ public class YepannetParser extends DefaultParser {
 
 	
 	@Override
-	public List<CrawllingObject> startJob(String url) {
+	public List<CrawllingRawDataDomain> startJob(CrawllingTargetDomain cDomain) {
 
-		List<CrawllingObject> list = new ArrayList<CrawllingObject>();
+		List<CrawllingRawDataDomain> list = new ArrayList<CrawllingRawDataDomain>();
 
 		int lastBoardNo = 1;
 
@@ -39,10 +40,10 @@ public class YepannetParser extends DefaultParser {
 		String link = null;
 		String boardNo = null;
 		try {
-			Document doc = Jsoup.connect(url).get();
+			Document doc = Jsoup.connect(cDomain.getUrl()).get();
 			Elements el = doc.select("tr[align=center]");
 			for (Element element : el) {
-				CrawllingObject crawObj = new CrawllingObject();
+				CrawllingRawDataDomain crawObj = new CrawllingRawDataDomain();
 
 				link = element.getElementsByClass("mw_basic_list_thumb").select("a[href]").attr("href");
 

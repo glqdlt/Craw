@@ -6,8 +6,8 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "crawlling_object_tbl")
-public class CrawllingObject {
+@Table(name = "crawlling_raw_data_tbl")
+public class CrawllingRawDataDomain {
 
 	@Override
 	public String toString() {

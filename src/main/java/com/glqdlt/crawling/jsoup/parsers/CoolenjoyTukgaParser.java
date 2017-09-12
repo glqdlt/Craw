@@ -3,6 +3,7 @@ package com.glqdlt.crawling.jsoup.parsers;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Callable;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -12,17 +13,26 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-import com.glqdlt.persistence.data.CrawllingObject;
+import com.glqdlt.persistence.data.CrawllingRawDataDomain;
+import com.glqdlt.persistence.data.CrawllingTargetDomain;
 
 @Component
-public class CoolenjoyTukgaParser extends DefaultParser {
+public class CoolenjoyTukgaParser extends DefaultParser  implements Callable<List<CrawllingRawDataDomain>>{
 
 	private static final Logger log = LoggerFactory.getLogger(CoolenjoyTukgaParser.class);
 
+	public CoolenjoyTukgaParser() {
+		// TODO Auto-generated constructor stub
+	}
+	CrawllingTargetDomain cDomain;
+	public CoolenjoyTukgaParser(CrawllingTargetDomain cDomain) {
+		this.cDomain = cDomain;
+	}
+	
 	@Override
-	public List<CrawllingObject> startJob(String url) {
+	public List<CrawllingRawDataDomain> startJob(CrawllingTargetDomain cDomain) {
 
-		List<CrawllingObject> list = new ArrayList<CrawllingObject>();
+		List<CrawllingRawDataDomain> list = new ArrayList<CrawllingRawDataDomain>();
 		int lastBoardNo = 1;
 		String subject = null;
 		String fullBody = null;
@@ -31,12 +41,12 @@ public class CoolenjoyTukgaParser extends DefaultParser {
 //		String price = null;
 		String boardNo = null;
 		try {
-			Document doc = Jsoup.connect(url).get();
+			Document doc = Jsoup.connect(cDomain.getUrl()).get();
 			Elements tbodys = doc.getElementsByTag("tbody");
 			Element tbody = tbodys.get(0);
 			Elements trs = tbody.getElementsByTag("tr");
 			for (Element element : trs) {
-				CrawllingObject CrawVO = new CrawllingObject();
+				CrawllingRawDataDomain CrawVO = new CrawllingRawDataDomain();
 				link = element.getElementsByClass("td_num").get(0).getElementsByTag("a").get(0).attr("href").toString();
 //				price = element.getElementsByClass("td_won").text();
 
@@ -64,6 +74,11 @@ public class CoolenjoyTukgaParser extends DefaultParser {
 			log.error("Parser Error.." + e);
 		}
 		return list;
+	}
+
+	@Override
+	public List<CrawllingRawDataDomain> call() throws Exception {
+		return startJob(cDomain);
 	}
 
 }
