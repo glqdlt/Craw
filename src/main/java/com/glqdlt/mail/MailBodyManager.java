@@ -5,9 +5,11 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
 
-import com.glqdlt.data.CrawRAWDataVO;
+import com.glqdlt.persistence.data.CrawllingRawDataDomain;
 
 public class MailBodyManager {
+	
+	
 	final static String table = " <table border='1' style='margin: 5 px;padding: 0;border: #ccc 1px solid;outline: 0;font-size: 12px;vertical-align: baseline;background: #fff;border-spacing: 0;font-family: Arial, Helvetica, sans-serif;color: #666;text-shadow: 1px 1px 0 #fff;-moz-border-radius: 3px;-webkit-border-radius: 3px;border-radius: 3px;-moz-box-shadow: 0 1px 2px #d1d1d1;-webkit-box-shadow: 0 1px 2px #d1d1d1;box-shadow: 0 1px 2px #d1d1d1'>";
 	final static String table2 = "</table>";
 	final static String css = "<style type='text/css'>body {font-size:15pt;} </style>";
@@ -27,7 +29,7 @@ public class MailBodyManager {
 	 * @param list
 	 * @return
 	 */
-	private static String HtmlTableMaker(List<CrawRAWDataVO> list) {
+	private static String HtmlTableMaker(List<CrawllingRawDataDomain> list) {
 
 		String table_header = tr + th + list.get(0).getSite_name() + " " + list.get(0).getData_name() +" ("+list.size()+")"+ th2 + tr2;
 		String table_index = tr +td+"순서(최신순)"+td2+  td + "제목" + td2 + tr2;
@@ -35,7 +37,7 @@ public class MailBodyManager {
 		String msg = "";
 
 		int i = 0;
-		for (CrawRAWDataVO c : list) {
+		for (CrawllingRawDataDomain c : list) {
 			i++;
 			msg += tr +td+i+td2+  td + "<a href='" + c.getLink() + "'>"
 					+ CheckLength(c.getSubject()) + "</a>" + td2 +   tr2;
@@ -50,11 +52,11 @@ public class MailBodyManager {
 		return head + table + body + table2 + tail;
 	}
 
-	public static String BodyMaker(List<List<CrawRAWDataVO>> list) {
+	public static String BodyMaker(List<List<CrawllingRawDataDomain>> list) {
 
 		String body = "";
 
-		for (List<CrawRAWDataVO> CDVO : list) {
+		for (List<CrawllingRawDataDomain> CDVO : list) {
 			/**
 			 * 만약 신규 데이터가 없으면 pass 한다.
 			 */
