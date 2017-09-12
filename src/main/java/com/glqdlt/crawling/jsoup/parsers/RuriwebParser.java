@@ -59,6 +59,11 @@ public class RuriwebParser extends DefaultParser implements Callable<List<Crawll
 						CrawVO.setLink(link);
 						CrawVO.setSubject(subject);
 						CrawVO.setboard_no(boardNo);
+						CrawVO.setData_name(cDomain.getData_name());
+						CrawVO.setData_tag(cDomain.getData_tag());
+						CrawVO.setSite_name(cDomain.getSite_name());
+						CrawVO.setSite_tag(cDomain.getSite_tag());
+
 
 						if (lastBoardNo < Integer.parseInt(boardNo)) {
 							list.add(CrawVO);

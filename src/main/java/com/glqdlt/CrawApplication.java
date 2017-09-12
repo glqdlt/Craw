@@ -28,6 +28,8 @@ public class CrawApplication implements CommandLineRunner {
 	@Override
 	public void run(String... arg0) throws Exception {
 
+		log.info("init crawlling targets settup..");
+		
 		biService.init();
 
 	}

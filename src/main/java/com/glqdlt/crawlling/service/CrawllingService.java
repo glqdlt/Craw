@@ -8,6 +8,8 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -85,11 +87,14 @@ public class CrawllingService {
 
 		for (Future<List<CrawllingRawDataDomain>> future : futurePool) {
 			try {
-				cRepo.save(future.get());
+				cRepo.save(future.get(60, TimeUnit.SECONDS));
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			} catch (ExecutionException e) {
 				e.printStackTrace();
+			}catch(TimeoutException e){
+				log.error("timeout Exception",e);
+				continue;
 			}
 
 		}
