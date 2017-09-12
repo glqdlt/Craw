@@ -1,6 +1,12 @@
 package com.glqdlt.data;
 
-public class CrawllingTargetInformation{
+public class CrawllingTargetInformation {
+
+	@Override
+	public String toString() {
+		return "CrawllingTargetInformation [site_tag=" + site_tag + ", data_tag=" + data_tag + ", site_name="
+				+ site_name + ", data_name=" + data_name + ", target_url=" + target_url + "]";
+	}
 
 	private int site_tag;
 	private int data_tag;

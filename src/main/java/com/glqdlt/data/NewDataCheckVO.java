@@ -2,15 +2,15 @@ package com.glqdlt.data;
 
 import org.jsoup.nodes.Document;
 
-import com.glqdlt.crawling.target.stack.CrawllingTarget;
-
 public class NewDataCheckVO {
+
+	@Override
+	public String toString() {
+		return "NewDataCheckVO [Check_boolean=" + Check_boolean + ", doc=" + doc + "]";
+	}
 
 	private boolean Check_boolean;
 	private Document doc;
-	private CrawllingTarget CrawllingTarget;
-	
-
 
 	public boolean GetCheck_boolean() {
 		return Check_boolean;
@@ -26,14 +26,6 @@ public class NewDataCheckVO {
 
 	public void setDoc(Document doc) {
 		this.doc = doc;
-	}
-
-	public CrawllingTarget getCrawllingTarget() {
-		return CrawllingTarget;
-	}
-
-	public void setCrawllingTarget(CrawllingTarget cto) {
-		this.CrawllingTarget = cto;
 	}
 
 }

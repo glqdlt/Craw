@@ -1,4 +1,4 @@
-package com.glqdlt.crawling.stack.jsoup;
+package com.glqdlt.crawling.stack.jsoup.parsers;
 
 import java.io.IOException;
 import java.net.SocketTimeoutException;
@@ -12,54 +12,36 @@ import org.jsoup.nodes.Document;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.glqdlt.crawling.target.stack.CrawllingTarget;
 import com.glqdlt.data.NewDataCheckVO;
-import com.glqdlt.system.LastCrawllingData;
 
-public abstract class JsoupFunctions {
-	Logger logger = LoggerFactory.getLogger(JsoupFunctions.class);
+public abstract class JsoupFunction {
 
-	
+	private static final Logger log = LoggerFactory.getLogger(JsoupFunction.class);
 
-	protected NewDataCheckVO CheckNewHash(CrawllingTarget target) {
-		
-		
+	protected NewDataCheckVO CheckNewHash() {
+
 		NewDataCheckVO NCVO = new NewDataCheckVO();
 
-		int data_tag = target.get_data_tag();
-		int site_tag = target.get_site_tag();
 		Document doc = null;
 		String old_hash = "";
 		String new_hash = "";
-		
-		old_hash = LastCrawllingData.getIns().getLastHash(site_tag, data_tag);
-		
-		try {
-			doc = Jsoup.connect(target.get_target_url()).get();
-			new_hash = CheckMD5(doc.toString());
-			
 
-		}catch(SocketTimeoutException e){ 
-			logger.warn("Timeout Exception.. Pass");
-		}
-		
-		catch (IOException e) {
-			e.printStackTrace();
+		try {
+			doc = Jsoup.connect("url").get();
+			new_hash = CheckMD5(doc.toString());
+		} catch (IOException e) {
+			log.error("checkMD5 Error." + e);
 		}
 		NCVO.setCheck_boolean(EqualsHash(new_hash, old_hash));
 		NCVO.setDoc(doc);
-		NCVO.setCrawllingTarget(target);
 
 		return NCVO;
 	}
 
 	private boolean EqualsHash(String new_md5, String old_md5) {
 
-		/**
-		 * NewSite라고 판단되면 true를 반환.
-		 */
 		if (!(old_md5.equals(new_md5))) {
-			
+
 			return true;
 		}
 		return false;
@@ -88,17 +70,8 @@ public abstract class JsoupFunctions {
 
 	protected String GetToday() {
 
-		SimpleDateFormat fm1 = new SimpleDateFormat("yyyy년 MM월 dd일");
+		SimpleDateFormat fm1 = new SimpleDateFormat("yyyy_MM_dd");
 		return fm1.format(new Date());
 	}
 
-	protected String FindReply(String text) {
-
-		text = text.trim();
-		if (text.substring(text.length() - 1, text.length()).equals("N")) {
-			text = text.substring(0, text.length() - 2);
-		}
-		text = text.trim();
-		return text;
-	}
 }

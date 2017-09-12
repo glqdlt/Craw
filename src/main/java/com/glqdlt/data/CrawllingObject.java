@@ -1,12 +1,19 @@
 package com.glqdlt.data;
 
-public class CrawRAWDataVO {
+public class CrawllingObject {
+
+	@Override
+	public String toString() {
+		return "CrawllingObject [subject=" + subject + ", link=" + link + ", write_date=" + write_date + ", price="
+				+ price + ", boardNo=" + boardNo + ", sale_pariod=" + sale_pariod + ", data_tag=" + data_tag
+				+ ", site_tag=" + site_tag + ", data_name=" + data_name + ", site_name=" + site_name + "]";
+	}
 
 	private String subject;
 	private String link;
 	private String write_date;
 	private String price;
-	private String column_no;
+	private String boardNo;
 	private String sale_pariod;
 	private int data_tag;
 	private int site_tag;
@@ -45,12 +52,12 @@ public class CrawRAWDataVO {
 		this.price = price;
 	}
 
-	public String getColumn_no() {
-		return column_no;
+	public String getBoardNo() {
+		return boardNo;
 	}
 
-	public void setColumn_no(String column_no) {
-		this.column_no = column_no;
+	public void setBoardNo(String boardNo) {
+		this.boardNo = boardNo;
 	}
 
 	public String getSale_pariod() {

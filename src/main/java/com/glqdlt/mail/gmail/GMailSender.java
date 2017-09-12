@@ -13,7 +13,7 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
-import com.glqdlt.data.CrawRAWDataVO;
+import com.glqdlt.data.CrawllingObject;
 import com.glqdlt.mail.MailBodyManager;
 import com.glqdlt.user.MailUserVO;
 
@@ -57,7 +57,7 @@ public class GMailSender {
 		}
 	}
 
-	public static void MailSend(List<List<CrawRAWDataVO>> list, List<MailUserVO> to_user_list) {
+	public static void MailSend(List<List<CrawllingObject>> list, List<MailUserVO> to_user_list) {
 
 		GMailBuilder build = new GMailBuilder();
 
@@ -65,7 +65,7 @@ public class GMailSender {
 		build.setMail_body(html);
 
 		int new_crawlling_data_raw_count = 0;
-		for (List<CrawRAWDataVO> l : list) {
+		for (List<CrawllingObject> l : list) {
 			new_crawlling_data_raw_count += l.size();
 
 		}

@@ -2,6 +2,12 @@ package com.glqdlt.data;
 
 public class LastCrawllingdataVO {
 
+	@Override
+	public String toString() {
+		return "LastCrawllingdataVO [site_tag=" + site_tag + ", data_tag=" + data_tag + ", last_craw_no=" + last_craw_no
+				+ ", last_craw_hash=" + last_craw_hash + ", url=" + url + ", value=" + value + "]";
+	}
+
 	private int site_tag;
 	private int data_tag;
 	private int last_craw_no;
