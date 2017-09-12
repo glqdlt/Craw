@@ -12,15 +12,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-import com.glqdlt.crawlling.data.CrawllingObject;
-
+import com.glqdlt.persistence.data.CrawllingObject;
 
 @Component
-public class RuriwebParser extends JsoupFunction {
+public class RuriwebParser extends DefaultParser {
 
 	private static final Logger log = LoggerFactory.getLogger(RuriwebParser.class);
 
-	public List<CrawllingObject> Doc_Parser(String url) {
+	@Override
+	public List<CrawllingObject> startJob(String url) {
 		List<CrawllingObject> list = new ArrayList<CrawllingObject>();
 
 		int lastBoardNo = 1;
@@ -72,6 +72,13 @@ public class RuriwebParser extends JsoupFunction {
 			text = text.substring(0, text.length() - 2);
 		}
 		text = text.trim();
+
+		if (text.lastIndexOf(")") == (text.length()) - 1) {
+
+			text = text.substring(0, text.lastIndexOf("(") - 1);
+
+		}
+
 		return text;
 	}
 

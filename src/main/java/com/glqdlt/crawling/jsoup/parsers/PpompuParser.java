@@ -14,15 +14,16 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-import com.glqdlt.crawlling.data.CrawllingObject;
+import com.glqdlt.persistence.data.CrawllingObject;
 
 
 @Component
-public class PpompuParser extends JsoupFunction {
+public class PpompuParser extends DefaultParser {
 
 	private static final Logger log = LoggerFactory.getLogger(PpompuParser.class);
 
-	public List<CrawllingObject> Doc_Parser(String url) {
+	@Override
+	public List<CrawllingObject> startJob(String url) {
 		List<CrawllingObject> list = new ArrayList<CrawllingObject>();
 
 		int last_column_no = 1;

@@ -2,7 +2,7 @@ package com.glqdlt.system;
 
 import java.util.List;
 
-import com.glqdlt.crawlling.data.LastCrawllingdataVO;
+import com.glqdlt.persistence.data.LastCrawllingdataVO;
 
 public class LastCrawllingData {
 

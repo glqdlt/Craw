@@ -13,9 +13,9 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
-import com.glqdlt.crawlling.data.CrawllingObject;
 import com.glqdlt.mail.MailBodyManager;
-import com.glqdlt.user.MailUserVO;
+import com.glqdlt.persistence.data.CrawllingObject;
+import com.glqdlt.persistence.data.UserDomain;
 
 public class GMailSender {
 
@@ -57,7 +57,7 @@ public class GMailSender {
 		}
 	}
 
-	public static void MailSend(List<List<CrawllingObject>> list, List<MailUserVO> to_user_list) {
+	public static void MailSend(List<List<CrawllingObject>> list, List<UserDomain> to_user_list) {
 
 		GMailBuilder build = new GMailBuilder();
 
@@ -71,7 +71,7 @@ public class GMailSender {
 		}
 
 		String subject = "";
-		for (MailUserVO MVO : to_user_list) {
+		for (UserDomain MVO : to_user_list) {
 			subject = "[행운의떼껄룩] 안녕하세요, " + MVO.getName() + " 님. 신규 정보 '" + new_crawlling_data_raw_count
 					+ "'개 있습니다. 확인하세요! ";
 			GMailSender.SendGMail(build, MVO.getEmail(), subject);

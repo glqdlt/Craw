@@ -15,18 +15,20 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.glqdlt.crawlling.data.CrawllingObject;
-import com.glqdlt.crawlling.service.CrawllingService;
+import com.glqdlt.crawlling.service.DataService;
+import com.glqdlt.persistence.data.CrawllingObject;
 
 @Component
-public class YepannetParser extends JsoupFunction {
+public class YepannetParser extends DefaultParser {
 
 	@Autowired
-	CrawllingService cService;
+	DataService cService;
 
 	private static final Logger log = LoggerFactory.getLogger(YepannetParser.class);
 
-	public List<CrawllingObject> Doc_Parser(String url) {
+	
+	@Override
+	public List<CrawllingObject> startJob(String url) {
 
 		List<CrawllingObject> list = new ArrayList<CrawllingObject>();
 

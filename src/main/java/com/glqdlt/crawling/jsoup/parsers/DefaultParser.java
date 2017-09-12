@@ -5,6 +5,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -13,20 +14,19 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.glqdlt.crawlling.data.NewDataCheckVO;
-import com.glqdlt.crawlling.service.CrawllingService;
-
+import com.glqdlt.crawlling.service.DataService;
+import com.glqdlt.persistence.data.CrawllingObject;
 
 @Component
-public abstract class JsoupFunction {
+public abstract class DefaultParser {
 
 	@Autowired
-	CrawllingService cService;
-	private static final Logger log = LoggerFactory.getLogger(JsoupFunction.class);
+	DataService cService;
+	private static final Logger log = LoggerFactory.getLogger(DefaultParser.class);
 
-	protected NewDataCheckVO CheckNewHash() {
+	public abstract List<CrawllingObject> startJob(String url);
 
-		NewDataCheckVO NCVO = new NewDataCheckVO();
+	protected void CheckNewHash() {
 
 		Document doc = null;
 		String old_hash = null;
@@ -38,10 +38,7 @@ public abstract class JsoupFunction {
 		} catch (IOException e) {
 			log.error("checkMD5 Error." + e);
 		}
-		NCVO.setCheck_boolean(EqualsHash(new_hash, old_hash));
-		NCVO.setDoc(doc);
 
-		return NCVO;
 	}
 
 	private boolean EqualsHash(String new_md5, String old_md5) {

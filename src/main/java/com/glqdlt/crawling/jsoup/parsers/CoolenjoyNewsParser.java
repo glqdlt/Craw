@@ -12,15 +12,16 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-import com.glqdlt.crawlling.data.CrawllingObject;
+import com.glqdlt.persistence.data.CrawllingObject;
 
 
 @Component
-public class CoolenjoyNewsParser extends JsoupFunction {
+public class CoolenjoyNewsParser extends DefaultParser {
 
 	private static final Logger log = LoggerFactory.getLogger(CoolenjoyNewsParser.class);
 
-	public List<CrawllingObject> Doc_Parser(String url) {
+	@Override
+	public List<CrawllingObject> startJob(String url) {
 
 		int lastBoardNo = 1;
 		String subject = null;
@@ -54,9 +55,11 @@ public class CoolenjoyNewsParser extends JsoupFunction {
 
 					}
 
+					subject = subjectRegex(subject);
 					CrawVO.setSubject(subject);
 					CrawVO.setBoard_write_date(date);
 					CrawVO.setLink(link);
+					CrawVO.setBoard_no(boardNo);
 
 					if (lastBoardNo < Integer.parseInt(boardNo)) {
 						list.add(CrawVO);
@@ -70,6 +73,15 @@ public class CoolenjoyNewsParser extends JsoupFunction {
 			log.error("Parser Error.." + e);
 		}
 		return list;
+	}
+	
+	private String subjectRegex(String text){
+		
+		if(text.lastIndexOf("개") == (text.length() )-1){
+			text = text.substring(0,text.lastIndexOf("댓글"));
+		};
+		
+		return text;
 	}
 
 }

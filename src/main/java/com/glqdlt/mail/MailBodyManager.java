@@ -5,7 +5,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
 
-import com.glqdlt.crawlling.data.CrawllingObject;
+import com.glqdlt.persistence.data.CrawllingObject;
 
 public class MailBodyManager {
 	

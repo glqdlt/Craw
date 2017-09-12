@@ -1,4 +1,4 @@
-package com.glqdlt;
+package glqdlt.test;
 
 import java.util.List;
 
@@ -9,8 +9,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.glqdlt.persistence.data.UserDomain;
 import com.glqdlt.system.LastCrawllingData;
-import com.glqdlt.user.MailUserVO;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "file:src/main/webapp/WEB-INF/spring/**/*.xml" })
@@ -34,7 +34,7 @@ public class SystemMainStartTester {
 			// continue;
 			// }
 			// List<MailUserVO> mail_user_list = dao.get_mailuser_list();
-			List<MailUserVO> mail_user_list = null;
+			List<UserDomain> mail_user_list = null;
 			logger.info("New_Crawlling data! Database Insert && Send Email...");
 			// for (List<CrawRAWDataVO> CRDVO_l : list) {
 			// dao.insertcrawlingdata(CRDVO_l);

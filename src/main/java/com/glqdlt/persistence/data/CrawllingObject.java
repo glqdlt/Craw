@@ -1,22 +1,39 @@
-package com.glqdlt.crawlling.data;
+package com.glqdlt.persistence.data;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "crawlling_object_tbl")
 public class CrawllingObject {
 
 	@Override
 	public String toString() {
 		return "CrawllingObject [subject=" + subject + ", link=" + link + ", write_date=" + board_write_date
-				+ ", price=" + price + ", boardNo=" + board_no + ", sale_pariod=" + sale_pariod + ", data_tag="
-				+ data_tag + ", site_tag=" + site_tag + ", data_name=" + data_name + ", site_name=" + site_name + "]";
+				+ ", boardNo=" + board_no  + ", data_tag=" + data_tag + ", site_tag="
+				+ site_tag + ", data_name=" + data_name + ", site_name=" + site_name + "]";
+	}
+
+	@Id
+	@GeneratedValue
+	private Integer no;
+
+	public Integer getNo() {
+		return no;
+	}
+
+	public void setNo(Integer no) {
+		this.no = no;
 	}
 
 	private String subject;
 	private String link;
 	private String board_write_date;
-	private String price;
 	private String board_no;
-	private String sale_pariod;
-	private int data_tag;
-	private int site_tag;
+	private Integer data_tag;
+	private Integer site_tag;
 	private String data_name;
 	private String site_name;
 
@@ -52,14 +69,6 @@ public class CrawllingObject {
 		this.board_no = board_no;
 	}
 
-	public String getPrice() {
-		return price;
-	}
-
-	public void setPrice(String price) {
-		this.price = price;
-	}
-
 	public String getboard_no() {
 		return board_no;
 	}
@@ -68,13 +77,6 @@ public class CrawllingObject {
 		this.board_no = boardNo;
 	}
 
-	public String getSale_pariod() {
-		return sale_pariod;
-	}
-
-	public void setSale_pariod(String sale_pariod) {
-		this.sale_pariod = sale_pariod;
-	}
 
 	public int getData_tag() {
 		return data_tag;

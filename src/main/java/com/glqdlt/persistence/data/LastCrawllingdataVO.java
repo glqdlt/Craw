@@ -1,4 +1,4 @@
-package com.glqdlt.crawlling.data;
+package com.glqdlt.persistence.data;
 
 public class LastCrawllingdataVO {
 
