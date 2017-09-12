@@ -4,10 +4,10 @@ import java.util.List;
 
 import org.junit.Test;
 
-import com.glqdlt.crawling.stack.jsoup.parsers.PpompuParser;
-import com.glqdlt.crawling.target.stack.PpompuCoupon;
-import com.glqdlt.crawling.target.stack.PpompuTukga;
-import com.glqdlt.data.CrawllingObject;
+import com.glqdlt.crawling.jsoup.parsers.PpompuParser;
+import com.glqdlt.crawling.target.PpompuCoupon;
+import com.glqdlt.crawling.target.PpompuTukga;
+import com.glqdlt.crawlling.data.CrawllingObject;
 
 public class FunctionTest {
 

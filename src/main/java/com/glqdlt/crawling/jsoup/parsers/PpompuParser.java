@@ -1,4 +1,4 @@
-package com.glqdlt.crawling.stack.jsoup.parsers;
+package com.glqdlt.crawling.jsoup.parsers;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -12,9 +12,12 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 
-import com.glqdlt.data.CrawllingObject;
+import com.glqdlt.crawlling.data.CrawllingObject;
 
+
+@Component
 public class PpompuParser extends JsoupFunction {
 
 	private static final Logger log = LoggerFactory.getLogger(PpompuParser.class);
@@ -24,11 +27,11 @@ public class PpompuParser extends JsoupFunction {
 
 		int last_column_no = 1;
 
-		String subject;
-		String link;
-		String boardNo;
-		String href;
-		Document doc;
+		String subject = null;
+		String link = null;
+		String boardNo = null;
+		String href = null;
+		Document doc = null;
 		try {
 			doc = Jsoup.connect(url).get();
 			Element table = doc.select("table[id=revolution_main_table]").get(0);
@@ -46,14 +49,14 @@ public class PpompuParser extends JsoupFunction {
 
 				CrawVO.setLink(link);
 				CrawVO.setSubject(subject);
-				CrawVO.setBoardNo(boardNo);
+				CrawVO.setboard_no(boardNo);
 
 				if (last_column_no < Integer.parseInt(boardNo)) {
 					list.add(CrawVO);
 				}
 			}
 		} catch (IOException e) {
-			log.error("Parser Error.."+e);
+			log.error("Parser Error.." + e);
 		}
 		return list;
 

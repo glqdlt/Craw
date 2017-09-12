@@ -1,4 +1,4 @@
-package com.glqdlt.crawling.stack.jsoup.parsers;
+package com.glqdlt.crawling.jsoup.parsers;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -12,10 +12,17 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
-import com.glqdlt.data.CrawllingObject;
+import com.glqdlt.crawlling.data.CrawllingObject;
+import com.glqdlt.crawlling.service.CrawllingService;
 
+@Component
 public class YepannetParser extends JsoupFunction {
+
+	@Autowired
+	CrawllingService cService;
 
 	private static final Logger log = LoggerFactory.getLogger(YepannetParser.class);
 
@@ -25,10 +32,10 @@ public class YepannetParser extends JsoupFunction {
 
 		int lastBoardNo = 1;
 
-		String subject;
-		String boardWriteDate;
-		String link;
-		String boardNo;
+		String subject = null;
+		String boardWriteDate = null;
+		String link = null;
+		String boardNo = null;
 		try {
 			Document doc = Jsoup.connect(url).get();
 			Elements el = doc.select("tr[align=center]");
@@ -42,10 +49,10 @@ public class YepannetParser extends JsoupFunction {
 				boardNo = boardNoRegex(link);
 				boardWriteDate = element.getElementsByClass("mw_basic_list_datetime").text();
 
-				crawObj.setwrite_date(boardWriteDate);
+				crawObj.setBoard_write_date(boardWriteDate);
 				crawObj.setLink(link);
 				crawObj.setSubject(subject);
-				crawObj.setBoardNo(boardNo);
+				crawObj.setboard_no(boardNo);
 
 				if (lastBoardNo < Integer.parseInt(boardNo)) {
 					list.add(crawObj);
@@ -55,7 +62,7 @@ public class YepannetParser extends JsoupFunction {
 			}
 
 		} catch (IOException e) {
-			log.error("Parser Error.."+e);
+			log.error("Parser Error.." + e);
 		}
 		return list;
 	}
@@ -65,13 +72,13 @@ public class YepannetParser extends JsoupFunction {
 		Pattern p = Pattern.compile(regex);
 		Matcher m = p.matcher(link);
 		m.find();
-		String find = m.group();
+		String result = m.group();
 		try {
-			find = find.replace("wr_id=", "");
+			result = result.replace("wr_id=", "");
 		} catch (IllegalStateException igone) {
-			find = "0";
+			result = "0";
 		}
-		return find;
+		return result;
 	}
 
 	private String subjectRegex(String subject) {

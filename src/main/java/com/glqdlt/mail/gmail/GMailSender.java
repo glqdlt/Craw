@@ -13,7 +13,7 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
-import com.glqdlt.data.CrawllingObject;
+import com.glqdlt.crawlling.data.CrawllingObject;
 import com.glqdlt.mail.MailBodyManager;
 import com.glqdlt.user.MailUserVO;
 

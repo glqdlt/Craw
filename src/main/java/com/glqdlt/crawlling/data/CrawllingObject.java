@@ -1,19 +1,19 @@
-package com.glqdlt.data;
+package com.glqdlt.crawlling.data;
 
 public class CrawllingObject {
 
 	@Override
 	public String toString() {
-		return "CrawllingObject [subject=" + subject + ", link=" + link + ", write_date=" + write_date + ", price="
-				+ price + ", boardNo=" + boardNo + ", sale_pariod=" + sale_pariod + ", data_tag=" + data_tag
-				+ ", site_tag=" + site_tag + ", data_name=" + data_name + ", site_name=" + site_name + "]";
+		return "CrawllingObject [subject=" + subject + ", link=" + link + ", write_date=" + board_write_date
+				+ ", price=" + price + ", boardNo=" + board_no + ", sale_pariod=" + sale_pariod + ", data_tag="
+				+ data_tag + ", site_tag=" + site_tag + ", data_name=" + data_name + ", site_name=" + site_name + "]";
 	}
 
 	private String subject;
 	private String link;
-	private String write_date;
+	private String board_write_date;
 	private String price;
-	private String boardNo;
+	private String board_no;
 	private String sale_pariod;
 	private int data_tag;
 	private int site_tag;
@@ -36,12 +36,20 @@ public class CrawllingObject {
 		this.link = link;
 	}
 
-	public String getwrite_date() {
-		return write_date;
+	public String getBoard_write_date() {
+		return board_write_date;
 	}
 
-	public void setwrite_date(String write_date) {
-		this.write_date = write_date;
+	public void setBoard_write_date(String board_write_date) {
+		this.board_write_date = board_write_date;
+	}
+
+	public String getBoard_no() {
+		return board_no;
+	}
+
+	public void setBoard_no(String board_no) {
+		this.board_no = board_no;
 	}
 
 	public String getPrice() {
@@ -52,12 +60,12 @@ public class CrawllingObject {
 		this.price = price;
 	}
 
-	public String getBoardNo() {
-		return boardNo;
+	public String getboard_no() {
+		return board_no;
 	}
 
-	public void setBoardNo(String boardNo) {
-		this.boardNo = boardNo;
+	public void setboard_no(String boardNo) {
+		this.board_no = boardNo;
 	}
 
 	public String getSale_pariod() {

@@ -1,4 +1,4 @@
-package com.glqdlt.crawling.stack.jsoup.parsers;
+package com.glqdlt.crawling.jsoup.parsers;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -10,57 +10,47 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 
-import com.glqdlt.crawling.target.stack.Ruriweb;
-import com.glqdlt.data.CrawllingObject;
+import com.glqdlt.crawlling.data.CrawllingObject;
 
+
+@Component
 public class RuriwebParser extends JsoupFunction {
-
-
 
 	private static final Logger log = LoggerFactory.getLogger(RuriwebParser.class);
 
-	
 	public List<CrawllingObject> Doc_Parser(String url) {
 		List<CrawllingObject> list = new ArrayList<CrawllingObject>();
 
-		int data_tag = Ruriweb.data_tag;
-		int site_tag = Ruriweb.site_tag;
-		String data_name = Ruriweb.data_name;
-		String site_name = Ruriweb.site_name;
+		int lastBoardNo = 1;
 
-		int last_column_no = 1;
-
-		String subject;
-		String write_date;
-		String link;
-		String column_no;
+		String subject = null;
+		String boardWriteDate = null;
+		String link = null;
+		String boardNo = null;
 		try {
 			Document doc = Jsoup.connect(url).get();
 			Elements elemnts = doc.getElementsByClass("board_list_table");
 			elemnts = elemnts.get(0).getElementsByClass("table_body");
 
 			for (Element el : elemnts) {
-				Elements elements_2 = el.getElementsByClass("table_body");
-				for (Element element2 : elements_2) {
-					if (element2.className().equals("table_body")) {
+				Elements elements2 = el.getElementsByClass("table_body");
+				for (Element el2 : elements2) {
+					if (el2.className().equals("table_body")) {
 						CrawllingObject CrawVO = new CrawllingObject();
 						link = el.getElementsByClass("subject").get(0).getElementsByClass("deco").attr("href");
-						write_date = el.getElementsByClass("time").text();
+						boardWriteDate = el.getElementsByClass("time").text();
 						subject = el.getElementsByClass("subject").text();
 						subject = FindReply(subject);
-						column_no = el.getElementsByClass("id").text();
+						boardNo = el.getElementsByClass("id").text();
 
-						CrawVO.setwrite_date(write_date);
+						CrawVO.setBoard_write_date(boardWriteDate);
 						CrawVO.setLink(link);
 						CrawVO.setSubject(subject);
-						CrawVO.setBoardNo(column_no);
-						CrawVO.setSite_tag(site_tag);
-						CrawVO.setData_tag(data_tag);
-						CrawVO.setSite_name(site_name);
-						CrawVO.setData_name(data_name);
+						CrawVO.setboard_no(boardNo);
 
-						if (last_column_no < Integer.parseInt(column_no)) {
+						if (lastBoardNo < Integer.parseInt(boardNo)) {
 							list.add(CrawVO);
 						}
 						CrawVO = null;
@@ -70,7 +60,7 @@ public class RuriwebParser extends JsoupFunction {
 			}
 
 		} catch (IOException e) {
-			log.error("Parser Error.."+e);
+			log.error("Parser Error.." + e);
 		}
 		return list;
 	}

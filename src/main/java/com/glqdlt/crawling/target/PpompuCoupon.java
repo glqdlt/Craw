@@ -1,4 +1,4 @@
-package com.glqdlt.crawling.target.stack;
+package com.glqdlt.crawling.target;
 
 public class PpompuCoupon {
 

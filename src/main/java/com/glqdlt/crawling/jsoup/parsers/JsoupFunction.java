@@ -1,7 +1,6 @@
-package com.glqdlt.crawling.stack.jsoup.parsers;
+package com.glqdlt.crawling.jsoup.parsers;
 
 import java.io.IOException;
-import java.net.SocketTimeoutException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
@@ -11,11 +10,18 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
-import com.glqdlt.data.NewDataCheckVO;
+import com.glqdlt.crawlling.data.NewDataCheckVO;
+import com.glqdlt.crawlling.service.CrawllingService;
 
+
+@Component
 public abstract class JsoupFunction {
 
+	@Autowired
+	CrawllingService cService;
 	private static final Logger log = LoggerFactory.getLogger(JsoupFunction.class);
 
 	protected NewDataCheckVO CheckNewHash() {
@@ -23,8 +29,8 @@ public abstract class JsoupFunction {
 		NewDataCheckVO NCVO = new NewDataCheckVO();
 
 		Document doc = null;
-		String old_hash = "";
-		String new_hash = "";
+		String old_hash = null;
+		String new_hash = null;
 
 		try {
 			doc = Jsoup.connect("url").get();
