@@ -21,11 +21,8 @@ public class CoolenjoyTukgaParser extends DefaultParser implements Callable<List
 
 	private static final Logger log = LoggerFactory.getLogger(CoolenjoyTukgaParser.class);
 
-	public CoolenjoyTukgaParser() {
-		// TODO Auto-generated constructor stub
-	}
 
-	CrawllingTargetDomain cDomain;
+	private CrawllingTargetDomain cDomain;
 
 	public CoolenjoyTukgaParser(CrawllingTargetDomain cDomain) {
 		this.cDomain = cDomain;

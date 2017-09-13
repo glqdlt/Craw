@@ -21,10 +21,7 @@ public class CoolenjoyNewsParser extends DefaultParser implements Callable<List<
 
 	private static final Logger log = LoggerFactory.getLogger(CoolenjoyNewsParser.class);
 
-	CrawllingTargetDomain cDomain;
-
-	public CoolenjoyNewsParser() {
-	}
+	private CrawllingTargetDomain cDomain;
 
 	public CoolenjoyNewsParser(CrawllingTargetDomain cDomain) {
 		this.cDomain = cDomain;

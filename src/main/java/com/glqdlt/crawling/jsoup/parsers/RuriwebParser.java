@@ -21,7 +21,7 @@ public class RuriwebParser extends DefaultParser implements Callable<List<Crawll
 
 	private static final Logger log = LoggerFactory.getLogger(RuriwebParser.class);
 
-	CrawllingTargetDomain cDomain;
+	private CrawllingTargetDomain cDomain;
 
 	public RuriwebParser(CrawllingTargetDomain cDomain) {
 		this.cDomain = cDomain;

@@ -22,7 +22,8 @@ import com.glqdlt.persistence.data.CrawllingTargetDomain;
 public class PpompuParser extends DefaultParser implements Callable<List<CrawllingRawDataDomain>> {
 
 	private static final Logger log = LoggerFactory.getLogger(PpompuParser.class);
-	CrawllingTargetDomain cDomain;
+	
+	private CrawllingTargetDomain cDomain;
 
 	public PpompuParser(CrawllingTargetDomain cDomain) {
 		this.cDomain = cDomain;
@@ -91,7 +92,7 @@ public class PpompuParser extends DefaultParser implements Callable<List<Crawlli
 	@Override
 	public List<CrawllingRawDataDomain> call() throws Exception {
 		// TODO Auto-generated method stub
-		return null;
+		return startJob(cDomain);
 	}
 
 }

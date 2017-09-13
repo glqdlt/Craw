@@ -26,7 +26,7 @@ public class YepannetParser extends DefaultParser implements Callable<List<Crawl
 	@Autowired
 	DataService cService;
 
-	CrawllingTargetDomain cDomain;
+	private CrawllingTargetDomain cDomain;
 
 	private static final Logger log = LoggerFactory.getLogger(YepannetParser.class);
 
@@ -110,7 +110,6 @@ public class YepannetParser extends DefaultParser implements Callable<List<Crawl
 
 	@Override
 	public List<CrawllingRawDataDomain> call() throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		return startJob(cDomain);
 	}
 }
