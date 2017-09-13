@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class CrawllingMom extends Thread {
+public class JobManager extends Thread {
 
 	@Autowired
 	JobWorker jobWork;
@@ -16,7 +16,7 @@ public class CrawllingMom extends Thread {
 		AutoCrawllingMode();
 	}
 
-	private static final Logger log = LoggerFactory.getLogger(CrawllingMom.class);
+	private static final Logger log = LoggerFactory.getLogger(JobManager.class);
 
 	public void AutoCrawllingMode() {
 
@@ -28,7 +28,7 @@ public class CrawllingMom extends Thread {
 			log.debug("End Auto Crawlling");
 			try {
 				log.debug("Sleep..");
-				Thread.sleep(20000);
+				Thread.sleep(600000);
 			} catch (InterruptedException e) {
 				log.error("Interpution ex", e);
 			}

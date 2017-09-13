@@ -14,7 +14,7 @@ import com.glqdlt.crawling.target.PpompuTukga;
 import com.glqdlt.crawling.target.Ruriweb;
 import com.glqdlt.crawling.target.YepannetTukga;
 import com.glqdlt.crawling.target.YepannetYepan;
-import com.glqdlt.crawlling.service.CrawllingMom;
+import com.glqdlt.crawlling.service.JobManager;
 import com.glqdlt.crawlling.service.JobStatus;
 import com.glqdlt.persistence.data.CrawllingTargetDomain;
 import com.glqdlt.persistence.repository.CrawllingTargetRepository;
@@ -26,7 +26,7 @@ public class BootInitService {
 	CrawllingTargetRepository ctRepo;
 	
 	@Autowired
-	CrawllingMom cMom;
+	JobManager cMom;
 
 
 	private static final Logger log = LoggerFactory.getLogger(BootInitService.class);

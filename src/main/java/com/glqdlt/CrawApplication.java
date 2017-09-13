@@ -9,7 +9,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 
 import com.glqdlt.configration.BootInitService;
-import com.glqdlt.crawlling.service.CrawllingMom;
+import com.glqdlt.crawlling.service.JobManager;
 import com.glqdlt.crawlling.service.JobStatus;
 import com.glqdlt.persistence.service.CrawllingJobService;
 

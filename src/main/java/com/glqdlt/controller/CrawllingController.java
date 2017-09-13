@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.glqdlt.crawlling.service.CrawllingMom;
+import com.glqdlt.crawlling.service.JobManager;
 import com.glqdlt.crawlling.service.JobStatus;
 import com.glqdlt.persistence.data.CrawllingStatusObject;
 
@@ -16,7 +16,7 @@ import com.glqdlt.persistence.data.CrawllingStatusObject;
 public class CrawllingController {
 
 	@Autowired
-	CrawllingMom cMom;
+	JobManager cMom;
 
 	@ResponseStatus(code = HttpStatus.BAD_REQUEST)
 	@RequestMapping(value = "/status")
