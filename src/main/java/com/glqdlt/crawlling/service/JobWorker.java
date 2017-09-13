@@ -95,7 +95,7 @@ public class JobWorker {
 		Integer lastBoardNo = cJobService.getLastBoardNo(crawNo);
 
 		try {
-			List<CrawllingRawDataDomain> l = fObject.getFuture().get(60, TimeUnit.SECONDS);
+			List<CrawllingRawDataDomain> l = fObject.getFuture().get(3, TimeUnit.MINUTES);
 
 			int findCound = 0;
 			for (CrawllingRawDataDomain cRawData : l) {
