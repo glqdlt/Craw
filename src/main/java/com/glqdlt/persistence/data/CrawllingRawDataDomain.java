@@ -22,14 +22,14 @@ public class CrawllingRawDataDomain {
 	@GeneratedValue
 	private Integer no;
 
-	private Integer craw_no;
+	private Integer crawNo;
 	private String subject;
 	private String link;
-	private String board_write_date;
-	private Integer board_no;
-	private Integer data_tag;
-	private Integer site_tag;
-	private String data_name;
-	private String site_name;
+	private String boardWriteDate;
+	private Integer boardNo;
+	private Integer dataTag;
+	private Integer siteTag;
+	private String dataName;
+	private String siteName;
 
 }

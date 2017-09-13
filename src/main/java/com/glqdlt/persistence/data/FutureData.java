@@ -15,6 +15,6 @@ import lombok.ToString;
 public class FutureData {
 
 	private Future<List<CrawllingRawDataDomain>> future; 
-	private Integer craw_no;
+	private CrawllingTargetDomain cDomain;
 
 }

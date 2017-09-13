@@ -31,7 +31,7 @@ public class MailBodyManager {
 	 */
 	private static String HtmlTableMaker(List<CrawllingRawDataDomain> list) {
 
-		String table_header = tr + th + list.get(0).getSite_name() + " " + list.get(0).getData_name() +" ("+list.size()+")"+ th2 + tr2;
+		String table_header = tr + th + list.get(0).getSiteName() + " " + list.get(0).getDataName() +" ("+list.size()+")"+ th2 + tr2;
 		String table_index = tr +td+"순서(최신순)"+td2+  td + "제목" + td2 + tr2;
 
 		String msg = "";

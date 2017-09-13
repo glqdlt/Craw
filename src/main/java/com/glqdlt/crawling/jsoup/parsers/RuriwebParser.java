@@ -61,10 +61,10 @@ public class RuriwebParser extends ParserUtill implements Callable<List<Crawllin
 						subject = FindReply(subject);
 						boardNo = el.getElementsByClass("id").text();
 
-						crawObj.setBoard_write_date(boardWriteDate);
+						crawObj.setBoardWriteDate(boardWriteDate);
 						crawObj.setLink(link);
 						crawObj.setSubject(subject);
-						crawObj.setBoard_no(parserBoardNo(boardNo));
+						crawObj.setBoardNo(parserBoardNo(boardNo));
 
 						// crawObj.setData_name(cDomain.getData_name());
 						// crawObj.setData_tag(cDomain.getData_tag());

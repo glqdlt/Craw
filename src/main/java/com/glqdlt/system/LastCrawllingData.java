@@ -31,9 +31,9 @@ public class LastCrawllingData {
 	public String getLastHash(int site_tag, int data_tag) {
 		String old_hash = "";
 		for (LastCrawllingdataVO lvo : list) {
-			if (lvo.getSite_tag() == site_tag) {
-				if (lvo.getData_tag() == data_tag) {
-					old_hash = lvo.getLast_craw_hash();
+			if (lvo.getSiteTag() == site_tag) {
+				if (lvo.getDataTag() == data_tag) {
+					old_hash = lvo.getLastCrawHash();
 				}
 			}
 
@@ -44,9 +44,9 @@ public class LastCrawllingData {
 	public int getLastColumn_no(int site_tag, int data_tag) {
 		int old_column_no = 0;
 		for (LastCrawllingdataVO lvo : list) {
-			if (lvo.getSite_tag() == site_tag) {
-				if (lvo.getData_tag() == data_tag) {
-					old_column_no = lvo.getLast_craw_no();
+			if (lvo.getSiteTag() == site_tag) {
+				if (lvo.getDataTag() == data_tag) {
+					old_column_no = lvo.getLastCrawNo();
 				}
 			}
 

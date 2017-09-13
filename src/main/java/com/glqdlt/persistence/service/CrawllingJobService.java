@@ -1,5 +1,6 @@
 package com.glqdlt.persistence.service;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
@@ -20,28 +21,54 @@ import com.glqdlt.persistence.repository.CrawllingTargetRepository;
 public class CrawllingJobService {
 
 	@Autowired
-	CrawllingTargetRepository ctRepo;
+	CrawllingTargetRepository cTargetRepo;
 
 	@Autowired
-	CrawllingRawDataRepository cRepo;
+	CrawllingRawDataRepository cRawDataRepo;
 
 	private static final Logger log = LoggerFactory.getLogger(CrawllingJobService.class);
 
-	public Integer getLastBoardNo(Integer craw_no) {
-		return 1;
+	synchronized public Integer getLastBoardNo(Integer craw_no) {
+		Integer resultLastBoardNo = 1;
+		List<CrawllingRawDataDomain> list = cRawDataRepo.findByCrawNo(craw_no);
+		if (list.size() == 0) {
+			return resultLastBoardNo;
+		}
+		Integer lastBoardNo = 0;
+
+		for (CrawllingRawDataDomain crawllingRawDataDomain : list) {
+
+			if (lastBoardNo == 0) {
+				lastBoardNo = crawllingRawDataDomain.getBoardNo();
+			}
+
+			if (crawllingRawDataDomain.getBoardNo() > lastBoardNo) {
+				lastBoardNo = crawllingRawDataDomain.getBoardNo();
+			}
+
+		}
+		if (lastBoardNo != 0) {
+			resultLastBoardNo = lastBoardNo;
+		}
+		return resultLastBoardNo;
 	}
 
 	public List<CrawllingTargetDomain> getAllCrawllingTargets() {
-		return ctRepo.findAll();
+		return cTargetRepo.findAll();
 	}
 
-	public void saveCrawllingRawData(Future<List<CrawllingRawDataDomain>> f) {
+	public void saveCrawllingRawDataList(Future<List<CrawllingRawDataDomain>> f) {
 		try {
-			cRepo.save(f.get(60, TimeUnit.SECONDS));
+			cRawDataRepo.save(f.get(60, TimeUnit.SECONDS));
 		} catch (InterruptedException | ExecutionException e) {
 			log.error("saveCrawllingRawData error.", e);
 		} catch (TimeoutException e) {
 			log.error("timeout ex", e);
 		}
 	}
+
+	public void saveCrawllingRawData(CrawllingRawDataDomain cRawData) {
+		cRawDataRepo.save(cRawData);
+	}
+
 }

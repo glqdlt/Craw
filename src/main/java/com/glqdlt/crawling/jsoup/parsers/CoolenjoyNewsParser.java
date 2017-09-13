@@ -73,9 +73,9 @@ public class CoolenjoyNewsParser extends ParserUtill implements Callable<List<Cr
 					subject = subjectRegex(subject);
 
 					crawObj.setSubject(subject);
-					crawObj.setBoard_write_date(date);
+					crawObj.setBoardWriteDate(date);
 					crawObj.setLink(link);
-					crawObj.setBoard_no(parserBoardNo(boardNo));
+					crawObj.setBoardNo(parserBoardNo(boardNo));
 					
 					
 

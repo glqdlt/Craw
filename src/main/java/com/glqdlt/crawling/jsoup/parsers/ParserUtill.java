@@ -75,11 +75,11 @@ public abstract class ParserUtill {
 	}
 
 	protected void setCommonData(CrawllingRawDataDomain crawObj, CrawllingTargetDomain cDomain) {
-		crawObj.setData_name(cDomain.getData_name());
-		crawObj.setData_tag(cDomain.getData_tag());
-		crawObj.setSite_name(cDomain.getSite_name());
-		crawObj.setSite_tag(cDomain.getSite_tag());
-		crawObj.setCraw_no(cDomain.getCraw_no());
+		crawObj.setDataName(cDomain.getDataName());
+		crawObj.setDataTag(cDomain.getDataTag());
+		crawObj.setSiteName(cDomain.getSiteName());
+		crawObj.setSiteTag(cDomain.getSiteTag());
+		crawObj.setCrawNo(cDomain.getCrawNo());
 
 	}
 	

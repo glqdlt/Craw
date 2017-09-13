@@ -42,42 +42,42 @@ public class CrawllingMom {
 
 		for (CrawllingTargetDomain cTarget : crawllingTargets) {
 
-			switch (cTarget.getCraw_no()) {
+			switch (cTarget.getCrawNo()) {
 
 			case 1:
 				Future<List<CrawllingRawDataDomain>> f1 = exePool.submit(new RuriwebParser(cTarget));
-				fPool.add(new FutureData(f1, 1));
+				fPool.add(new FutureData(f1, cTarget));
 				break;
 
 			case 2:
 				Future<List<CrawllingRawDataDomain>> f2 = exePool.submit(new CoolenjoyNewsParser(cTarget));
-				fPool.add(new FutureData(f2, 2));
+				fPool.add(new FutureData(f2, cTarget));
 				break;
 			case 3:
 				Future<List<CrawllingRawDataDomain>> f3 = exePool.submit(new CoolenjoyTukgaParser(cTarget));
-				fPool.add(new FutureData(f3, 3));
+				fPool.add(new FutureData(f3, cTarget));
 				break;
 
 			case 4:
 
 				Future<List<CrawllingRawDataDomain>> f4 = exePool.submit(new PpompuParser(cTarget));
-				fPool.add(new FutureData(f4, 4));
+				fPool.add(new FutureData(f4, cTarget));
 				break;
 
 			case 5:
 
 				Future<List<CrawllingRawDataDomain>> f5 = exePool.submit(new PpompuParser(cTarget));
-				fPool.add(new FutureData(f5, 5));
+				fPool.add(new FutureData(f5, cTarget));
 				break;
 			case 6:
 
 				Future<List<CrawllingRawDataDomain>> f6 = exePool.submit(new YepannetParser(cTarget));
-				fPool.add(new FutureData(f6, 6));
+				fPool.add(new FutureData(f6, cTarget));
 				break;
 			case 7:
 
 				Future<List<CrawllingRawDataDomain>> f7 = exePool.submit(new YepannetParser(cTarget));
-				fPool.add(new FutureData(f7, 7));
+				fPool.add(new FutureData(f7, cTarget));
 				break;
 			default:
 				break;
@@ -86,37 +86,40 @@ public class CrawllingMom {
 		}
 
 		for (FutureData f : fPool) {
-			cJobService.saveCrawllingRawData(f.getFuture());
+			checkLastBoardNo(f);
 		}
 
 		log.info("done");
 
 	}
 
-	private boolean checkLastBoardNo(FutureData f) {
+	private void checkLastBoardNo(FutureData fObject) {
 
-		Integer crawNo = f.getCraw_no();
-
+		CrawllingTargetDomain cDomain = fObject.getCDomain();
+		Integer crawNo = cDomain.getCrawNo();
 		Integer lastBoardNo = cJobService.getLastBoardNo(crawNo);
 
 		try {
-			List<CrawllingRawDataDomain> l = f.getFuture().get(60, TimeUnit.SECONDS);
-			for (CrawllingRawDataDomain crawllingRawDataDomain : l) {
-				
-				if(crawllingRawDataDomain.getBoard_no() > lastBoardNo){
-					
-				}
-				
-			}
-			
-			
-		} catch (InterruptedException | ExecutionException e) {
-			e.printStackTrace();
-		} catch (TimeoutException e) {
-			e.printStackTrace();
-		}
+			List<CrawllingRawDataDomain> l = fObject.getFuture().get(60, TimeUnit.SECONDS);
 
-		return false;
+			int findCound = 0;
+			for (CrawllingRawDataDomain cRawData : l) {
+				if (cRawData.getBoardNo() > lastBoardNo) {
+					findCound++;
+					cJobService.saveCrawllingRawData(cRawData);
+				}
+			}
+			if (findCound != 0) {
+				log.info("Find New Board, " + findCound + " : " + cDomain.getSiteName() + "_" + cDomain.getDataName());
+			} else {
+				log.info("Not found New Board");
+			}
+
+		} catch (InterruptedException | ExecutionException e) {
+			log.error("Exception..", e);
+		} catch (TimeoutException e) {
+			log.error("timeOut..", e);
+		}
 	}
 
 }

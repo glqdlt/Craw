@@ -61,10 +61,10 @@ public class YepannetParser extends ParserUtill implements Callable<List<Crawlli
 				boardNo = boardNoRegex(link);
 				boardWriteDate = element.getElementsByClass("mw_basic_list_datetime").text();
 
-				crawObj.setBoard_write_date(boardWriteDate);
+				crawObj.setBoardWriteDate(boardWriteDate);
 				crawObj.setLink(link);
 				crawObj.setSubject(subject);
-				crawObj.setBoard_no(parserBoardNo(boardNo));
+				crawObj.setBoardNo(parserBoardNo(boardNo));
 
 				// crawObj.setData_name(cDomain.getData_name());
 				// crawObj.setData_tag(cDomain.getData_tag());

@@ -65,7 +65,7 @@ public class PpompuParser extends ParserUtill implements Callable<List<Crawlling
 
 				crawObj.setLink(link);
 				crawObj.setSubject(subject);
-				crawObj.setBoard_no(parserBoardNo(boardNo));
+				crawObj.setBoardNo(parserBoardNo(boardNo));
 
 				// crawObj.setData_name(cDomain.getData_name());
 				// crawObj.setData_tag(cDomain.getData_tag());

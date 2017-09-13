@@ -20,14 +20,14 @@ public class CrawllingTargetDomain {
 
 	@Id
 	@GeneratedValue
-	private int craw_no;
+	private int crawNo;
 
 	private String url;
-	private String data_name;
-	private Integer data_tag;
-	private String site_name;
-	private Integer site_tag;
-	private Integer craw_type;
-	private Integer last_board_no;
+	private String dataName;
+	private Integer dataTag;
+	private String siteName;
+	private Integer siteTag;
+	private Integer crawType;
+	private Integer lastBoardNo;
 
 }

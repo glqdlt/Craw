@@ -67,7 +67,7 @@ public class CoolenjoyTukgaParser extends ParserUtill implements Callable<List<C
 				// CrawVO.setSale_pariod(salePariod);
 				crawObj.setLink(link);
 				crawObj.setSubject(subject);
-				crawObj.setBoard_no(parserBoardNo(boardNo));
+				crawObj.setBoardNo(parserBoardNo(boardNo));
 
 				// crawObj.setData_name(cDomain.getData_name());
 				// crawObj.setData_tag(cDomain.getData_tag());
