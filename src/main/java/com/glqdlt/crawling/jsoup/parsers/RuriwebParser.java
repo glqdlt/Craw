@@ -21,14 +21,12 @@ public class RuriwebParser extends DefaultParser implements Callable<List<Crawll
 
 	private static final Logger log = LoggerFactory.getLogger(RuriwebParser.class);
 
-	public RuriwebParser() {
-		// TODO Auto-generated constructor stub
-	}
 	CrawllingTargetDomain cDomain;
+
 	public RuriwebParser(CrawllingTargetDomain cDomain) {
 		this.cDomain = cDomain;
 	}
-	
+
 	@Override
 	public List<CrawllingRawDataDomain> startJob(CrawllingTargetDomain cDomain) {
 		List<CrawllingRawDataDomain> list = new ArrayList<CrawllingRawDataDomain>();
@@ -48,27 +46,27 @@ public class RuriwebParser extends DefaultParser implements Callable<List<Crawll
 				Elements elements2 = el.getElementsByClass("table_body");
 				for (Element el2 : elements2) {
 					if (el2.className().equals("table_body")) {
-						CrawllingRawDataDomain CrawVO = new CrawllingRawDataDomain();
+						CrawllingRawDataDomain crawObj = new CrawllingRawDataDomain();
 						link = el.getElementsByClass("subject").get(0).getElementsByClass("deco").attr("href");
 						boardWriteDate = el.getElementsByClass("time").text();
 						subject = el.getElementsByClass("subject").text();
 						subject = FindReply(subject);
 						boardNo = el.getElementsByClass("id").text();
 
-						CrawVO.setBoard_write_date(boardWriteDate);
-						CrawVO.setLink(link);
-						CrawVO.setSubject(subject);
-						CrawVO.setBoard_no(boardNo);
-						CrawVO.setData_name(cDomain.getData_name());
-						CrawVO.setData_tag(cDomain.getData_tag());
-						CrawVO.setSite_name(cDomain.getSite_name());
-						CrawVO.setSite_tag(cDomain.getSite_tag());
-
+						crawObj.setBoard_write_date(boardWriteDate);
+						crawObj.setLink(link);
+						crawObj.setSubject(subject);
+						crawObj.setBoard_no(boardNo);
+						crawObj.setData_name(cDomain.getData_name());
+						crawObj.setData_tag(cDomain.getData_tag());
+						crawObj.setSite_name(cDomain.getSite_name());
+						crawObj.setSite_tag(cDomain.getSite_tag());
+						crawObj.setCraw_no(cDomain.getCraw_no());
 
 						if (lastBoardNo < Integer.parseInt(boardNo)) {
-							list.add(CrawVO);
+							list.add(crawObj);
 						}
-						CrawVO = null;
+						crawObj = null;
 					}
 
 				}

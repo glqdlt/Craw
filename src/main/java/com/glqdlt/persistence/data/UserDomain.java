@@ -5,6 +5,16 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+
+
+@ToString
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
 @Entity
 @Table(name = "user_tbl")
 public class UserDomain {
@@ -13,14 +23,6 @@ public class UserDomain {
 	@GeneratedValue
 	private Integer no;
 
-	public Integer getNo() {
-		return no;
-	}
-
-	public void setNo(Integer no) {
-		this.no = no;
-	}
-
 	private String id;
 	private String name;
 	private String n_name;
@@ -28,24 +30,5 @@ public class UserDomain {
 	private Integer role;
 	private boolean listen_mail;
 	private String password;
-	
-	
-	
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
 
 }

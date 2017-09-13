@@ -1,9 +1,7 @@
 package com.glqdlt.crawlling.service;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -21,19 +19,12 @@ import com.glqdlt.crawling.jsoup.parsers.CoolenjoyTukgaParser;
 import com.glqdlt.crawling.jsoup.parsers.PpompuParser;
 import com.glqdlt.crawling.jsoup.parsers.RuriwebParser;
 import com.glqdlt.crawling.jsoup.parsers.YepannetParser;
-import com.glqdlt.crawling.target.CoolenjoyNews;
-import com.glqdlt.crawling.target.CoolenjoyTukga;
-import com.glqdlt.crawling.target.PpompuCoupon;
-import com.glqdlt.crawling.target.Ruriweb;
-import com.glqdlt.crawling.target.YepannetTukga;
-import com.glqdlt.crawling.target.YepannetYepan;
 import com.glqdlt.persistence.data.CrawllingRawDataDomain;
 import com.glqdlt.persistence.data.CrawllingTargetDomain;
 import com.glqdlt.persistence.repository.CrawllingRawDataRepository;
 
 @Service
 public class CrawllingService {
-
 
 	@Autowired
 	CrawllingRawDataRepository cRepo;
@@ -50,37 +41,45 @@ public class CrawllingService {
 
 		for (CrawllingTargetDomain crawllingTarget : list) {
 
-			if (crawllingTarget.getNo() == 1) {
+			switch (crawllingTarget.getCraw_no()) {
+
+			case 1:
 				Future<List<CrawllingRawDataDomain>> f1 = exePool.submit(new RuriwebParser(crawllingTarget));
 				futurePool.add(f1);
-			}
+				break;
 
-			if (crawllingTarget.getNo() == 2) {
+			case 2:
 				Future<List<CrawllingRawDataDomain>> f2 = exePool.submit(new CoolenjoyNewsParser(crawllingTarget));
 				futurePool.add(f2);
-
-			}
-
-			if (crawllingTarget.getNo() == 3) {
+				break;
+			case 3:
 				Future<List<CrawllingRawDataDomain>> f3 = exePool.submit(new CoolenjoyTukgaParser(crawllingTarget));
 				futurePool.add(f3);
+				break;
 
-			}
+			case 4:
 
-			if (crawllingTarget.getNo() == 4) {
+				Future<List<CrawllingRawDataDomain>> f4 = exePool.submit(new PpompuParser(crawllingTarget));
+				futurePool.add(f4);
+				break;
 
-			}
+			case 5:
 
-			if (crawllingTarget.getNo() == 5) {
+				Future<List<CrawllingRawDataDomain>> f5 = exePool.submit(new PpompuParser(crawllingTarget));
+				futurePool.add(f5);
+				break;
+			case 6:
 
-			}
+				Future<List<CrawllingRawDataDomain>> f6 = exePool.submit(new YepannetParser(crawllingTarget));
+				futurePool.add(f6);
+				break;
+			case 7:
 
-			if (crawllingTarget.getNo() == 6) {
-
-			}
-
-			if (crawllingTarget.getNo() == 7) {
-
+				Future<List<CrawllingRawDataDomain>> f7 = exePool.submit(new YepannetParser(crawllingTarget));
+				futurePool.add(f7);
+				break;
+			default:
+				break;
 			}
 
 		}
@@ -88,12 +87,10 @@ public class CrawllingService {
 		for (Future<List<CrawllingRawDataDomain>> future : futurePool) {
 			try {
 				cRepo.save(future.get(60, TimeUnit.SECONDS));
-			} catch (InterruptedException e) {
+			} catch (InterruptedException | ExecutionException e) {
 				e.printStackTrace();
-			} catch (ExecutionException e) {
-				e.printStackTrace();
-			}catch(TimeoutException e){
-				log.error("timeout Exception",e);
+			} catch (TimeoutException e) {
+				log.error("timeout Exception", e);
 				continue;
 			}
 

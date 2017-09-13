@@ -16,22 +16,21 @@ import org.springframework.stereotype.Component;
 import com.glqdlt.persistence.data.CrawllingRawDataDomain;
 import com.glqdlt.persistence.data.CrawllingTargetDomain;
 
-
 @Component
 public class CoolenjoyNewsParser extends DefaultParser implements Callable<List<CrawllingRawDataDomain>> {
 
 	private static final Logger log = LoggerFactory.getLogger(CoolenjoyNewsParser.class);
 
 	CrawllingTargetDomain cDomain;
-	
+
 	public CoolenjoyNewsParser() {
 	}
-	
+
 	public CoolenjoyNewsParser(CrawllingTargetDomain cDomain) {
 		this.cDomain = cDomain;
-		
+
 	}
-	
+
 	@Override
 	public List<CrawllingRawDataDomain> startJob(CrawllingTargetDomain cDomain) {
 
@@ -47,7 +46,7 @@ public class CoolenjoyNewsParser extends DefaultParser implements Callable<List<
 			Elements trElements = doc.getElementsByTag("table").get(0).getElementsByTag("tr");
 
 			for (Element tr : trElements) {
-				CrawllingRawDataDomain CrawVO = new CrawllingRawDataDomain();
+				CrawllingRawDataDomain crawObj = new CrawllingRawDataDomain();
 				Elements tds = tr.getElementsByTag("td");
 
 				if (tds.hasClass("td_subject")) {
@@ -68,20 +67,20 @@ public class CoolenjoyNewsParser extends DefaultParser implements Callable<List<
 					}
 
 					subject = subjectRegex(subject);
-					CrawVO.setSubject(subject);
-					CrawVO.setBoard_write_date(date);
-					CrawVO.setLink(link);
-					CrawVO.setBoard_no(boardNo);
-					CrawVO.setData_name(cDomain.getData_name());
-					CrawVO.setData_tag(cDomain.getData_tag());
-					CrawVO.setSite_name(cDomain.getSite_name());
-					CrawVO.setSite_tag(cDomain.getSite_tag());
+					crawObj.setSubject(subject);
+					crawObj.setBoard_write_date(date);
+					crawObj.setLink(link);
+					crawObj.setBoard_no(boardNo);
+					crawObj.setData_name(cDomain.getData_name());
+					crawObj.setData_tag(cDomain.getData_tag());
+					crawObj.setSite_name(cDomain.getSite_name());
+					crawObj.setSite_tag(cDomain.getSite_tag());
 
 					if (lastBoardNo < Integer.parseInt(boardNo)) {
-						list.add(CrawVO);
+						list.add(crawObj);
 					}
 				}
-				CrawVO = null;
+				crawObj = null;
 
 			}
 
@@ -90,20 +89,20 @@ public class CoolenjoyNewsParser extends DefaultParser implements Callable<List<
 		}
 		return list;
 	}
-	
-	private String subjectRegex(String text){
-		
-		if(text.lastIndexOf("개") == (text.length() )-1){
-			text = text.substring(0,text.lastIndexOf("댓글"));
-		};
-		
+
+	private String subjectRegex(String text) {
+
+		if (text.lastIndexOf("개") == (text.length()) - 1) {
+			text = text.substring(0, text.lastIndexOf("댓글"));
+		}
+		;
+
 		return text;
 	}
 
-
 	@Override
 	public List<CrawllingRawDataDomain> call() throws Exception {
-		
+
 		return startJob(cDomain);
 	}
 

@@ -3,6 +3,7 @@ package com.glqdlt.crawling.jsoup.parsers;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Callable;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -17,11 +18,15 @@ import org.springframework.stereotype.Component;
 import com.glqdlt.persistence.data.CrawllingRawDataDomain;
 import com.glqdlt.persistence.data.CrawllingTargetDomain;
 
-
 @Component
-public class PpompuParser extends DefaultParser {
+public class PpompuParser extends DefaultParser implements Callable<List<CrawllingRawDataDomain>> {
 
 	private static final Logger log = LoggerFactory.getLogger(PpompuParser.class);
+	CrawllingTargetDomain cDomain;
+
+	public PpompuParser(CrawllingTargetDomain cDomain) {
+		this.cDomain = cDomain;
+	}
 
 	@Override
 	public List<CrawllingRawDataDomain> startJob(CrawllingTargetDomain cDomain) {
@@ -52,6 +57,11 @@ public class PpompuParser extends DefaultParser {
 				CrawVO.setLink(link);
 				CrawVO.setSubject(subject);
 				CrawVO.setBoard_no(boardNo);
+				CrawVO.setData_name(cDomain.getData_name());
+				CrawVO.setData_tag(cDomain.getData_tag());
+				CrawVO.setSite_name(cDomain.getSite_name());
+				CrawVO.setSite_tag(cDomain.getSite_tag());
+				CrawVO.setCraw_no(cDomain.getCraw_no());
 
 				if (last_column_no < Integer.parseInt(boardNo)) {
 					list.add(CrawVO);
@@ -76,6 +86,12 @@ public class PpompuParser extends DefaultParser {
 			find = "0";
 		}
 		return find;
+	}
+
+	@Override
+	public List<CrawllingRawDataDomain> call() throws Exception {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

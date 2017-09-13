@@ -3,6 +3,7 @@ package com.glqdlt.crawling.jsoup.parsers;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Callable;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -20,14 +21,19 @@ import com.glqdlt.persistence.data.CrawllingRawDataDomain;
 import com.glqdlt.persistence.data.CrawllingTargetDomain;
 
 @Component
-public class YepannetParser extends DefaultParser {
+public class YepannetParser extends DefaultParser implements Callable<List<CrawllingRawDataDomain>> {
 
 	@Autowired
 	DataService cService;
 
+	CrawllingTargetDomain cDomain;
+
 	private static final Logger log = LoggerFactory.getLogger(YepannetParser.class);
 
-	
+	public YepannetParser(CrawllingTargetDomain cDomain) {
+		this.cDomain = cDomain;
+	}
+
 	@Override
 	public List<CrawllingRawDataDomain> startJob(CrawllingTargetDomain cDomain) {
 
@@ -56,6 +62,11 @@ public class YepannetParser extends DefaultParser {
 				crawObj.setLink(link);
 				crawObj.setSubject(subject);
 				crawObj.setBoard_no(boardNo);
+				crawObj.setData_name(cDomain.getData_name());
+				crawObj.setData_tag(cDomain.getData_tag());
+				crawObj.setSite_name(cDomain.getSite_name());
+				crawObj.setSite_tag(cDomain.getSite_tag());
+				crawObj.setCraw_no(cDomain.getCraw_no());
 
 				if (lastBoardNo < Integer.parseInt(boardNo)) {
 					list.add(crawObj);
@@ -95,5 +106,11 @@ public class YepannetParser extends DefaultParser {
 		subject = subject.replace("[특판정보]", "");
 		subject = subject.replace("[예판정보]", "");
 		return subject;
+	}
+
+	@Override
+	public List<CrawllingRawDataDomain> call() throws Exception {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
