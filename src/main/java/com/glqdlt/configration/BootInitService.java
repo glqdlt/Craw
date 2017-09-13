@@ -14,6 +14,8 @@ import com.glqdlt.crawling.target.PpompuTukga;
 import com.glqdlt.crawling.target.Ruriweb;
 import com.glqdlt.crawling.target.YepannetTukga;
 import com.glqdlt.crawling.target.YepannetYepan;
+import com.glqdlt.crawlling.service.CrawllingMom;
+import com.glqdlt.crawlling.service.JobStatus;
 import com.glqdlt.persistence.data.CrawllingTargetDomain;
 import com.glqdlt.persistence.repository.CrawllingTargetRepository;
 
@@ -22,6 +24,10 @@ public class BootInitService {
 
 	@Autowired
 	CrawllingTargetRepository ctRepo;
+	
+	@Autowired
+	CrawllingMom cMom;
+
 
 	private static final Logger log = LoggerFactory.getLogger(BootInitService.class);
 
@@ -30,6 +36,13 @@ public class BootInitService {
 		setUp().forEach(x -> ctRepo.save(x));
 		log.info("Boot Init complete to Crawlling Targets.");
 
+	}
+	
+	public void startAutoCrawlling(){
+		if (JobStatus.getInstance().getStatus() != 1) {
+			log.info("Start Boot Crawlling Auto mode.");
+			cMom.start();
+		}
 	}
 
 	private ArrayList<CrawllingTargetDomain> setUp() {

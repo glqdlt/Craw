@@ -1,5 +1,6 @@
 package com.glqdlt.controller;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -8,23 +9,25 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.glqdlt.crawlling.service.CrawllingMom;
 import com.glqdlt.crawlling.service.JobStatus;
+import com.glqdlt.persistence.data.CrawllingStatusObject;
 
-@RequestMapping(value = "/crawlling")
+@RequestMapping(value = "/crawlling/system")
 @RestController
-public class MainController {
+public class CrawllingController {
 
 	@Autowired
 	CrawllingMom cMom;
 
 	@ResponseStatus(code = HttpStatus.BAD_REQUEST)
-	@RequestMapping(value = "/start")
-	public String start() {
+	@RequestMapping(value = "/status")
+	public CrawllingStatusObject getStatus() {
+		CrawllingStatusObject cObj = new CrawllingStatusObject();
+		Integer status = 0;
 		if (JobStatus.getInstance().getStatus() != 1) {
-			cMom.start();
-			return "Start Auto Crawlling Mode..";
+			status = 1;
 		}
-
-		return "Auto Crawlling Mode, Alive";
+		cObj.setStatus(status);
+		return cObj;
 	}
 
 	@ResponseStatus(code = HttpStatus.BAD_REQUEST)
@@ -39,10 +42,5 @@ public class MainController {
 
 	}
 
-	@ResponseStatus(code = HttpStatus.BAD_REQUEST)
-	@RequestMapping(value = "/status")
-	public void status() {
-
-	}
 
 }

@@ -21,6 +21,10 @@ public class CrawApplication implements CommandLineRunner {
 	BootInitService biService;
 
 
+	@Autowired
+	CrawllingJobService cJobService;
+
+	
 	private static final Logger log = LoggerFactory.getLogger(CrawApplication.class);
 
 	public static void main(String[] args) {
@@ -33,6 +37,7 @@ public class CrawApplication implements CommandLineRunner {
 		log.info("init crawlling targets settup..");
 
 		biService.init();
+		biService.startAutoCrawlling();
 		
 	}
 

@@ -53,6 +53,10 @@ public class CrawllingJobService {
 		return resultLastBoardNo;
 	}
 
+	public List<CrawllingRawDataDomain> getAllRawData() {
+		return cRawDataRepo.findAll();
+	}
+
 	public List<CrawllingTargetDomain> getAllCrawllingTargets() {
 		return cTargetRepo.findAll();
 	}
