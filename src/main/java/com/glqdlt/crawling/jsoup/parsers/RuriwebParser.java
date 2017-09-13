@@ -16,6 +16,8 @@ import org.springframework.stereotype.Component;
 import com.glqdlt.persistence.data.CrawllingRawDataDomain;
 import com.glqdlt.persistence.data.CrawllingTargetDomain;
 
+import lombok.NoArgsConstructor;
+@NoArgsConstructor
 @Component
 public class RuriwebParser extends DefaultParser implements Callable<List<CrawllingRawDataDomain>> {
 

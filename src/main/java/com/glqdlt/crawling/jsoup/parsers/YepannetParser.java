@@ -20,6 +20,9 @@ import com.glqdlt.crawlling.service.DataService;
 import com.glqdlt.persistence.data.CrawllingRawDataDomain;
 import com.glqdlt.persistence.data.CrawllingTargetDomain;
 
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor
 @Component
 public class YepannetParser extends DefaultParser implements Callable<List<CrawllingRawDataDomain>> {
 

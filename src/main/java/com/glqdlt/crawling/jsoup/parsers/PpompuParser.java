@@ -18,6 +18,8 @@ import org.springframework.stereotype.Component;
 import com.glqdlt.persistence.data.CrawllingRawDataDomain;
 import com.glqdlt.persistence.data.CrawllingTargetDomain;
 
+import lombok.NoArgsConstructor;
+@NoArgsConstructor
 @Component
 public class PpompuParser extends DefaultParser implements Callable<List<CrawllingRawDataDomain>> {
 

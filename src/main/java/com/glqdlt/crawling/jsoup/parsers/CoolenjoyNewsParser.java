@@ -16,6 +16,9 @@ import org.springframework.stereotype.Component;
 import com.glqdlt.persistence.data.CrawllingRawDataDomain;
 import com.glqdlt.persistence.data.CrawllingTargetDomain;
 
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor
 @Component
 public class CoolenjoyNewsParser extends DefaultParser implements Callable<List<CrawllingRawDataDomain>> {
 
@@ -72,6 +75,7 @@ public class CoolenjoyNewsParser extends DefaultParser implements Callable<List<
 					crawObj.setData_tag(cDomain.getData_tag());
 					crawObj.setSite_name(cDomain.getSite_name());
 					crawObj.setSite_tag(cDomain.getSite_tag());
+					crawObj.setCraw_no(cDomain.getCraw_no());
 
 					if (lastBoardNo < Integer.parseInt(boardNo)) {
 						list.add(crawObj);
