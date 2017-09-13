@@ -78,4 +78,13 @@ public abstract class DefaultParser {
 		return fm1.format(new Date());
 	}
 
+	protected void setCommonData(CrawllingRawDataDomain crawObj, CrawllingTargetDomain cDomain) {
+		crawObj.setData_name(cDomain.getData_name());
+		crawObj.setData_tag(cDomain.getData_tag());
+		crawObj.setSite_name(cDomain.getSite_name());
+		crawObj.setSite_tag(cDomain.getSite_tag());
+		crawObj.setCraw_no(cDomain.getCraw_no());
+
+	}
+
 }

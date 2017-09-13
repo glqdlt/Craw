@@ -17,6 +17,7 @@ import com.glqdlt.persistence.data.CrawllingRawDataDomain;
 import com.glqdlt.persistence.data.CrawllingTargetDomain;
 
 import lombok.NoArgsConstructor;
+
 @NoArgsConstructor
 @Component
 public class RuriwebParser extends DefaultParser implements Callable<List<CrawllingRawDataDomain>> {
@@ -59,11 +60,13 @@ public class RuriwebParser extends DefaultParser implements Callable<List<Crawll
 						crawObj.setLink(link);
 						crawObj.setSubject(subject);
 						crawObj.setBoard_no(boardNo);
-						crawObj.setData_name(cDomain.getData_name());
-						crawObj.setData_tag(cDomain.getData_tag());
-						crawObj.setSite_name(cDomain.getSite_name());
-						crawObj.setSite_tag(cDomain.getSite_tag());
-						crawObj.setCraw_no(cDomain.getCraw_no());
+
+						// crawObj.setData_name(cDomain.getData_name());
+						// crawObj.setData_tag(cDomain.getData_tag());
+						// crawObj.setSite_name(cDomain.getSite_name());
+						// crawObj.setSite_tag(cDomain.getSite_tag());
+						// crawObj.setCraw_no(cDomain.getCraw_no());
+						setCommonData(crawObj, cDomain);
 
 						if (lastBoardNo < Integer.parseInt(boardNo)) {
 							list.add(crawObj);

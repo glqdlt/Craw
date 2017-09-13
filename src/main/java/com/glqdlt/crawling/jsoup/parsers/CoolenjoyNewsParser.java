@@ -67,15 +67,18 @@ public class CoolenjoyNewsParser extends DefaultParser implements Callable<List<
 					}
 
 					subject = subjectRegex(subject);
+
 					crawObj.setSubject(subject);
 					crawObj.setBoard_write_date(date);
 					crawObj.setLink(link);
 					crawObj.setBoard_no(boardNo);
-					crawObj.setData_name(cDomain.getData_name());
-					crawObj.setData_tag(cDomain.getData_tag());
-					crawObj.setSite_name(cDomain.getSite_name());
-					crawObj.setSite_tag(cDomain.getSite_tag());
-					crawObj.setCraw_no(cDomain.getCraw_no());
+
+					// crawObj.setData_name(cDomain.getData_name());
+					// crawObj.setData_tag(cDomain.getData_tag());
+					// crawObj.setSite_name(cDomain.getSite_name());
+					// crawObj.setSite_tag(cDomain.getSite_tag());
+					// crawObj.setCraw_no(cDomain.getCraw_no());
+					setCommonData(crawObj, cDomain);
 
 					if (lastBoardNo < Integer.parseInt(boardNo)) {
 						list.add(crawObj);

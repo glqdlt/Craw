@@ -19,12 +19,13 @@ import com.glqdlt.persistence.data.CrawllingRawDataDomain;
 import com.glqdlt.persistence.data.CrawllingTargetDomain;
 
 import lombok.NoArgsConstructor;
+
 @NoArgsConstructor
 @Component
 public class PpompuParser extends DefaultParser implements Callable<List<CrawllingRawDataDomain>> {
 
 	private static final Logger log = LoggerFactory.getLogger(PpompuParser.class);
-	
+
 	private CrawllingTargetDomain cDomain;
 
 	public PpompuParser(CrawllingTargetDomain cDomain) {
@@ -53,21 +54,23 @@ public class PpompuParser extends DefaultParser implements Callable<List<Crawlli
 					log.debug("find '#' break to continue.");
 					continue;
 				}
-				CrawllingRawDataDomain CrawVO = new CrawllingRawDataDomain();
+				CrawllingRawDataDomain crawObj = new CrawllingRawDataDomain();
 				link = "http://www.ppomppu.co.kr/zboard/" + href;
 				boardNo = boardNoRegex(link);
 
-				CrawVO.setLink(link);
-				CrawVO.setSubject(subject);
-				CrawVO.setBoard_no(boardNo);
-				CrawVO.setData_name(cDomain.getData_name());
-				CrawVO.setData_tag(cDomain.getData_tag());
-				CrawVO.setSite_name(cDomain.getSite_name());
-				CrawVO.setSite_tag(cDomain.getSite_tag());
-				CrawVO.setCraw_no(cDomain.getCraw_no());
+				crawObj.setLink(link);
+				crawObj.setSubject(subject);
+				crawObj.setBoard_no(boardNo);
+
+				// crawObj.setData_name(cDomain.getData_name());
+				// crawObj.setData_tag(cDomain.getData_tag());
+				// crawObj.setSite_name(cDomain.getSite_name());
+				// crawObj.setSite_tag(cDomain.getSite_tag());
+				// crawObj.setCraw_no(cDomain.getCraw_no());
+				setCommonData(crawObj, cDomain);
 
 				if (last_column_no < Integer.parseInt(boardNo)) {
-					list.add(CrawVO);
+					list.add(crawObj);
 				}
 			}
 		} catch (IOException e) {
