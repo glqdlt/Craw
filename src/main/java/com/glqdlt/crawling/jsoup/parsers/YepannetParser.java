@@ -55,7 +55,7 @@ public class YepannetParser extends DefaultParser {
 				crawObj.setBoard_write_date(boardWriteDate);
 				crawObj.setLink(link);
 				crawObj.setSubject(subject);
-				crawObj.setboard_no(boardNo);
+				crawObj.setBoard_no(boardNo);
 
 				if (lastBoardNo < Integer.parseInt(boardNo)) {
 					list.add(crawObj);

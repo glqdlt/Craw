@@ -51,7 +51,7 @@ public class PpompuParser extends DefaultParser {
 
 				CrawVO.setLink(link);
 				CrawVO.setSubject(subject);
-				CrawVO.setboard_no(boardNo);
+				CrawVO.setBoard_no(boardNo);
 
 				if (last_column_no < Integer.parseInt(boardNo)) {
 					list.add(CrawVO);

@@ -61,7 +61,7 @@ public class CoolenjoyTukgaParser extends DefaultParser  implements Callable<Lis
 //				CrawVO.setSale_pariod(salePariod);
 				CrawVO.setLink(link);
 				CrawVO.setSubject(subject);
-				CrawVO.setboard_no(boardNo);
+				CrawVO.setBoard_no(boardNo);
 				CrawVO.setData_name(cDomain.getData_name());
 				CrawVO.setData_tag(cDomain.getData_tag());
 				CrawVO.setSite_name(cDomain.getSite_name());

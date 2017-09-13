@@ -5,6 +5,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+
 @Table(name = "crawlling_target_tbl")
 @Entity
 public class CrawllingTargetDomain {
