@@ -7,17 +7,24 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.glqdlt.crawlling.service.CrawllingMom;
+import com.glqdlt.crawlling.service.JobStatus;
 
 @RequestMapping(value = "/crawlling")
 @RestController
 public class MainController {
+
 	@Autowired
-	CrawllingMom cService;
+	CrawllingMom cMom;
 
 	@ResponseStatus(code = HttpStatus.BAD_REQUEST)
 	@RequestMapping(value = "/start")
-	public void start() {
-		cService.jobRunner();
+	public String start() {
+		if (JobStatus.getInstance().getStatus() != 1) {
+			cMom.start();
+			return "Start Auto Crawlling Mode..";
+		}
+
+		return "Auto Crawlling Mode, Alive";
 	}
 
 	@ResponseStatus(code = HttpStatus.BAD_REQUEST)

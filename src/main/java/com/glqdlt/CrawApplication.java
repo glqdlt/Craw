@@ -9,6 +9,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 
 import com.glqdlt.configration.BootInitService;
+import com.glqdlt.crawlling.service.CrawllingMom;
+import com.glqdlt.crawlling.service.JobStatus;
+import com.glqdlt.persistence.service.CrawllingJobService;
 
 @ComponentScan(basePackages = "com.glqdlt.*")
 @SpringBootApplication
@@ -16,6 +19,7 @@ public class CrawApplication implements CommandLineRunner {
 
 	@Autowired
 	BootInitService biService;
+
 
 	private static final Logger log = LoggerFactory.getLogger(CrawApplication.class);
 
@@ -29,7 +33,7 @@ public class CrawApplication implements CommandLineRunner {
 		log.info("init crawlling targets settup..");
 
 		biService.init();
-
+		
 	}
 
 }
