@@ -21,7 +21,6 @@ public class CrawDomainEntity {
 	@Id
 	@GeneratedValue
 	private int crawNo;
-
 	private String url;
 	private String dataName;
 	private Integer dataTag;
@@ -29,5 +28,4 @@ public class CrawDomainEntity {
 	private Integer siteTag;
 	private Integer crawType;
 	private Integer lastBoardNo;
-
 }
