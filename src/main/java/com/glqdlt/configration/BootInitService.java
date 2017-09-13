@@ -1,4 +1,4 @@
-package com.glqdlt.crawlling.service;
+package com.glqdlt.configration;
 
 import java.util.ArrayList;
 
@@ -39,22 +39,23 @@ public class BootInitService {
 		ArrayList<CrawllingTargetDomain> list = new ArrayList<>();
 
 		list.add(new CrawllingTargetDomain(1, Ruriweb.target_url, Ruriweb.data_name, Ruriweb.data_tag,
-				Ruriweb.site_name, Ruriweb.site_tag, Ruriweb.craw_type));
+				Ruriweb.site_name, Ruriweb.site_tag, Ruriweb.craw_type, 1));
 
 		list.add(new CrawllingTargetDomain(2, CoolenjoyNews.target_url, CoolenjoyNews.data_name, CoolenjoyNews.data_tag,
-				CoolenjoyNews.site_name, CoolenjoyNews.site_tag, CoolenjoyNews.craw_type));
+				CoolenjoyNews.site_name, CoolenjoyNews.site_tag, CoolenjoyNews.craw_type, 1));
 		list.add(new CrawllingTargetDomain(3, CoolenjoyTukga.target_url, CoolenjoyTukga.data_name,
-				CoolenjoyTukga.data_tag, CoolenjoyTukga.site_name, CoolenjoyTukga.site_tag, CoolenjoyTukga.craw_type));
+				CoolenjoyTukga.data_tag, CoolenjoyTukga.site_name, CoolenjoyTukga.site_tag, CoolenjoyTukga.craw_type,
+				1));
 
 		list.add(new CrawllingTargetDomain(4, PpompuCoupon.target_url, PpompuCoupon.data_name, PpompuCoupon.data_tag,
-				PpompuCoupon.site_name, PpompuCoupon.site_tag, PpompuCoupon.craw_type));
+				PpompuCoupon.site_name, PpompuCoupon.site_tag, PpompuCoupon.craw_type, 1));
 		list.add(new CrawllingTargetDomain(5, PpompuTukga.target_url, PpompuTukga.data_name, PpompuTukga.data_tag,
-				PpompuTukga.site_name, PpompuTukga.site_tag, PpompuTukga.craw_type));
+				PpompuTukga.site_name, PpompuTukga.site_tag, PpompuTukga.craw_type, 1));
 
 		list.add(new CrawllingTargetDomain(6, YepannetTukga.target_url, YepannetTukga.data_name, YepannetTukga.data_tag,
-				YepannetTukga.site_name, YepannetTukga.site_tag, YepannetTukga.craw_type));
+				YepannetTukga.site_name, YepannetTukga.site_tag, YepannetTukga.craw_type, 1));
 		list.add(new CrawllingTargetDomain(7, YepannetYepan.target_url, YepannetYepan.data_name, YepannetYepan.data_tag,
-				YepannetYepan.site_name, YepannetYepan.site_tag, YepannetYepan.craw_type));
+				YepannetYepan.site_name, YepannetYepan.site_tag, YepannetYepan.craw_type, 1));
 
 		log.info("Ready to Crawlling data init.");
 		return list;

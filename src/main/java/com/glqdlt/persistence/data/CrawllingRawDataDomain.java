@@ -26,7 +26,7 @@ public class CrawllingRawDataDomain {
 	private String subject;
 	private String link;
 	private String board_write_date;
-	private String board_no;
+	private Integer board_no;
 	private Integer data_tag;
 	private Integer site_tag;
 	private String data_name;

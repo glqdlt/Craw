@@ -16,18 +16,18 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.glqdlt.crawlling.service.DataService;
 import com.glqdlt.persistence.data.CrawllingRawDataDomain;
 import com.glqdlt.persistence.data.CrawllingTargetDomain;
+import com.glqdlt.persistence.service.CrawllingJobService;
 
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 @Component
-public class YepannetParser extends DefaultParser implements Callable<List<CrawllingRawDataDomain>> {
+public class YepannetParser extends ParserUtill implements Callable<List<CrawllingRawDataDomain>> {
 
 	@Autowired
-	DataService cService;
+	CrawllingJobService cService;
 
 	private CrawllingTargetDomain cDomain;
 
@@ -64,7 +64,7 @@ public class YepannetParser extends DefaultParser implements Callable<List<Crawl
 				crawObj.setBoard_write_date(boardWriteDate);
 				crawObj.setLink(link);
 				crawObj.setSubject(subject);
-				crawObj.setBoard_no(boardNo);
+				crawObj.setBoard_no(parserBoardNo(boardNo));
 
 				// crawObj.setData_name(cDomain.getData_name());
 				// crawObj.setData_tag(cDomain.getData_tag());

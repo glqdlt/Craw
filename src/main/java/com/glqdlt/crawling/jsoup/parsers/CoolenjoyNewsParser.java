@@ -11,19 +11,23 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.glqdlt.persistence.data.CrawllingRawDataDomain;
 import com.glqdlt.persistence.data.CrawllingTargetDomain;
+import com.glqdlt.persistence.service.CrawllingJobService;
 
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 @Component
-public class CoolenjoyNewsParser extends DefaultParser implements Callable<List<CrawllingRawDataDomain>> {
+public class CoolenjoyNewsParser extends ParserUtill implements Callable<List<CrawllingRawDataDomain>> {
 
 	private static final Logger log = LoggerFactory.getLogger(CoolenjoyNewsParser.class);
 
+	@Autowired
+	CrawllingJobService cService;
 	private CrawllingTargetDomain cDomain;
 
 	public CoolenjoyNewsParser(CrawllingTargetDomain cDomain) {
@@ -71,7 +75,9 @@ public class CoolenjoyNewsParser extends DefaultParser implements Callable<List<
 					crawObj.setSubject(subject);
 					crawObj.setBoard_write_date(date);
 					crawObj.setLink(link);
-					crawObj.setBoard_no(boardNo);
+					crawObj.setBoard_no(parserBoardNo(boardNo));
+					
+					
 
 					// crawObj.setData_name(cDomain.getData_name());
 					// crawObj.setData_tag(cDomain.getData_tag());

@@ -7,7 +7,7 @@
 	</configSuffixes>
 	<enableImports><![CDATA[false]]></enableImports>
 	<configs>
-		<config>java:glqdlt.test.CrawApplication</config>
+		<config>java:com.glqdlt.CrawApplication</config>
 	</configs>
 	<autoconfigs>
 	</autoconfigs>

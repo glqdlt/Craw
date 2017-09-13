@@ -6,13 +6,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.glqdlt.crawlling.service.CrawllingService;
+import com.glqdlt.crawlling.service.CrawllingMom;
 
 @RequestMapping(value = "/crawlling")
 @RestController
 public class MainController {
 	@Autowired
-	CrawllingService cService;
+	CrawllingMom cService;
 
 	@ResponseStatus(code = HttpStatus.BAD_REQUEST)
 	@RequestMapping(value = "/start")

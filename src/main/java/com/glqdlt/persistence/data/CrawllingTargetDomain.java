@@ -28,5 +28,6 @@ public class CrawllingTargetDomain {
 	private String site_name;
 	private Integer site_tag;
 	private Integer craw_type;
+	private Integer last_board_no;
 
 }
