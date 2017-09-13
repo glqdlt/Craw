@@ -15,7 +15,7 @@ import lombok.ToString;
 @ToString
 @Data
 @Entity
-@Table(name = "craw_rawdata")
+@Table(name = "craw_raw_data")
 public class CrawRawDataEntity {
 
 	@Id
