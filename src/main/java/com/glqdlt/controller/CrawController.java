@@ -16,7 +16,7 @@ import com.glqdlt.persistence.vo.CrawStatusVo;
 public class CrawController {
 
 	@Autowired
-	JobManager cMom;
+	JobManager cJobManager;
 
 	@ResponseStatus(code = HttpStatus.BAD_REQUEST)
 	@RequestMapping(value = "/status")
