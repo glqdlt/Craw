@@ -20,37 +20,34 @@ import com.glqdlt.persistence.entity.CrawDomainEntity;
 import com.glqdlt.persistence.repository.CrawDomainRepository;
 
 @Service
-public class BootInit {
+public class AppInitializer {
 
 	@Autowired
-	CrawDomainRepository ctRepo;
+	CrawDomainRepository cDomainRepo;
 	
 	@Autowired
-	JobManager cMom;
+	JobManager cJobManager;
 
 
-	private static final Logger log = LoggerFactory.getLogger(BootInit.class);
+	private static final Logger log = LoggerFactory.getLogger(AppInitializer.class);
 
 	public void initCrawDomainDatas() {
 
-		setUp().forEach(x -> ctRepo.save(x));
-		log.info("Boot Init complete to Crawlling Targets.");
+		setUp().forEach(x -> cDomainRepo.save(x));
+		log.info("Boot Init complete to Crawlling Domains.");
 
 	}
 	
 	public void startAutoCrawlling(){
 		if (JobStatus.getInstance().getStatus() != 1) {
-			log.info("Start Boot Crawlling Auto mode.");
-			cMom.start();
+			log.info("Start Crawlling Auto Mode.");
+			cJobManager.start();
 		}
 	}
 
 	private ArrayList<CrawDomainEntity> setUp() {
 
-		log.info("Crawlling data setup for init..");
-
 		ArrayList<CrawDomainEntity> list = new ArrayList<>();
-
 		list.add(new CrawDomainEntity(1, Ruriweb.target_url, Ruriweb.data_name, Ruriweb.data_tag,
 				Ruriweb.site_name, Ruriweb.site_tag, Ruriweb.craw_type, 1));
 
@@ -69,8 +66,6 @@ public class BootInit {
 				YepannetTukga.site_name, YepannetTukga.site_tag, YepannetTukga.craw_type, 1));
 		list.add(new CrawDomainEntity(7, YepannetYepan.target_url, YepannetYepan.data_name, YepannetYepan.data_tag,
 				YepannetYepan.site_name, YepannetYepan.site_tag, YepannetYepan.craw_type, 1));
-
-		log.info("Ready to Crawlling data init.");
 		return list;
 
 	}
