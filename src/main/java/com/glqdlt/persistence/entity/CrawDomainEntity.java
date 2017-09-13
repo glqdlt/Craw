@@ -1,4 +1,4 @@
-package com.glqdlt.persistence.data;
+package com.glqdlt.persistence.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,25 +10,24 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-
 @ToString
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@Table(name = "craw_domain")
 @Entity
-@Table(name = "user_tbl")
-public class UserDomain {
+public class CrawDomainEntity {
 
 	@Id
 	@GeneratedValue
-	private Integer no;
+	private int crawNo;
 
-	private String id;
-	private String name;
-	private String n_name;
-	private String email;
-	private Integer role;
-	private boolean listen_mail;
-	private String password;
+	private String url;
+	private String dataName;
+	private Integer dataTag;
+	private String siteName;
+	private Integer siteTag;
+	private Integer crawType;
+	private Integer lastBoardNo;
 
 }

@@ -2,35 +2,35 @@ package com.glqdlt.system;
 
 import java.util.List;
 
-import com.glqdlt.persistence.data.LastCrawllingdataVO;
+import com.glqdlt.persistence.vo.LastCrawDataVO;
 
-public class LastCrawllingData {
+public class LastCrawDataChecker {
 
-	private List<LastCrawllingdataVO> list;
-	private static LastCrawllingData ins;
+	private List<LastCrawDataVO> list;
+	private static LastCrawDataChecker ins;
 
-	private LastCrawllingData() {
+	private LastCrawDataChecker() {
 
 	}
 
-	public static LastCrawllingData getIns() {
+	public static LastCrawDataChecker getIns() {
 		if (ins == null) {
-			ins = new LastCrawllingData();
+			ins = new LastCrawDataChecker();
 		}
 		return ins;
 	}
 
-	public List<LastCrawllingdataVO> getList() {
+	public List<LastCrawDataVO> getList() {
 		return list;
 	}
 
-	public synchronized void setList(List<LastCrawllingdataVO> list) {
+	public synchronized void setList(List<LastCrawDataVO> list) {
 		this.list = list;
 	}
 
 	public String getLastHash(int site_tag, int data_tag) {
 		String old_hash = "";
-		for (LastCrawllingdataVO lvo : list) {
+		for (LastCrawDataVO lvo : list) {
 			if (lvo.getSiteTag() == site_tag) {
 				if (lvo.getDataTag() == data_tag) {
 					old_hash = lvo.getLastCrawHash();
@@ -43,7 +43,7 @@ public class LastCrawllingData {
 
 	public int getLastColumn_no(int site_tag, int data_tag) {
 		int old_column_no = 0;
-		for (LastCrawllingdataVO lvo : list) {
+		for (LastCrawDataVO lvo : list) {
 			if (lvo.getSiteTag() == site_tag) {
 				if (lvo.getDataTag() == data_tag) {
 					old_column_no = lvo.getLastCrawNo();

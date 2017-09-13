@@ -1,4 +1,4 @@
-package com.glqdlt.persistence.data;
+package com.glqdlt.persistence.vo;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,7 +9,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @ToString
 @Data
-public class LastCrawllingdataVO {
+public class LastCrawDataVO {
 
 	private int siteTag;
 	private int dataTag;

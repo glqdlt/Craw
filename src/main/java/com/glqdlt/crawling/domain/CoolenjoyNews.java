@@ -1,4 +1,4 @@
-package com.glqdlt.crawling.target;
+package com.glqdlt.crawling.domain;
 
 public class CoolenjoyNews {
 

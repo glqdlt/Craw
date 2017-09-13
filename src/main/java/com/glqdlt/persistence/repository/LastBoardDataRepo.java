@@ -4,9 +4,9 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.glqdlt.persistence.data.CrawllingRawDataDomain;
+import com.glqdlt.persistence.entity.CrawRawDataEntity;
 
-public interface LastBoardDataRepo extends JpaRepository<CrawllingRawDataDomain, Integer> {
+public interface LastBoardDataRepo extends JpaRepository<CrawRawDataEntity, Integer> {
 
-	List<CrawllingRawDataDomain> findByBoardNo(Integer boardNo);
+	List<CrawRawDataEntity> findByBoardNo(Integer boardNo);
 }

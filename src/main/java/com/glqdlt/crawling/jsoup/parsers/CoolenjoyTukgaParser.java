@@ -14,30 +14,31 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.glqdlt.persistence.data.CrawllingRawDataDomain;
-import com.glqdlt.persistence.data.CrawllingTargetDomain;
-import com.glqdlt.persistence.service.CrawllingJobService;
+import com.glqdlt.persistence.entity.CrawRawDataEntity;
+import com.glqdlt.crawling.jsoup.utill.ParserUtill;
+import com.glqdlt.persistence.entity.CrawDomainEntity;
+import com.glqdlt.persistence.service.CrawDataService;
 
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 @Component
-public class CoolenjoyTukgaParser extends ParserUtill implements Callable<List<CrawllingRawDataDomain>> {
+public class CoolenjoyTukgaParser extends ParserUtill implements Callable<List<CrawRawDataEntity>> {
 
 	private static final Logger log = LoggerFactory.getLogger(CoolenjoyTukgaParser.class);
 
 	@Autowired
-	CrawllingJobService cService;
-	private CrawllingTargetDomain cDomain;
+	CrawDataService cService;
+	private CrawDomainEntity cDomain;
 
-	public CoolenjoyTukgaParser(CrawllingTargetDomain cDomain) {
+	public CoolenjoyTukgaParser(CrawDomainEntity cDomain) {
 		this.cDomain = cDomain;
 	}
 
 	@Override
-	public List<CrawllingRawDataDomain> startJob(CrawllingTargetDomain cDomain) {
+	public List<CrawRawDataEntity> startJob(CrawDomainEntity cDomain) {
 
-		List<CrawllingRawDataDomain> list = new ArrayList<CrawllingRawDataDomain>();
+		List<CrawRawDataEntity> list = new ArrayList<CrawRawDataEntity>();
 		int lastBoardNo = 1;
 		String subject = null;
 		String fullBody = null;
@@ -51,7 +52,7 @@ public class CoolenjoyTukgaParser extends ParserUtill implements Callable<List<C
 			Element tbody = tbodys.get(0);
 			Elements trs = tbody.getElementsByTag("tr");
 			for (Element element : trs) {
-				CrawllingRawDataDomain crawObj = new CrawllingRawDataDomain();
+				CrawRawDataEntity crawObj = new CrawRawDataEntity();
 				link = element.getElementsByClass("td_num").get(0).getElementsByTag("a").get(0).attr("href").toString();
 				// price = element.getElementsByClass("td_won").text();
 
@@ -90,7 +91,7 @@ public class CoolenjoyTukgaParser extends ParserUtill implements Callable<List<C
 	}
 
 	@Override
-	public List<CrawllingRawDataDomain> call() throws Exception {
+	public List<CrawRawDataEntity> call() throws Exception {
 		return startJob(cDomain);
 	}
 

@@ -20,61 +20,61 @@ import com.glqdlt.crawling.jsoup.parsers.CoolenjoyTukgaParser;
 import com.glqdlt.crawling.jsoup.parsers.PpompuParser;
 import com.glqdlt.crawling.jsoup.parsers.RuriwebParser;
 import com.glqdlt.crawling.jsoup.parsers.YepannetParser;
-import com.glqdlt.persistence.data.CrawllingRawDataDomain;
-import com.glqdlt.persistence.data.CrawllingTargetDomain;
-import com.glqdlt.persistence.data.FutureData;
-import com.glqdlt.persistence.service.CrawllingJobService;
+import com.glqdlt.persistence.entity.CrawRawDataEntity;
+import com.glqdlt.persistence.entity.CrawDomainEntity;
+import com.glqdlt.persistence.service.CrawDataService;
+import com.glqdlt.persistence.vo.FutureDataVo;
 
 @Component
 public class JobWorker {
 	@Autowired
-	CrawllingJobService cJobService;
+	CrawDataService cJobService;
 
 	private static final Logger log = LoggerFactory.getLogger(JobWorker.class);
 
 	public void jobRunner() {
 		ExecutorService exePool = Executors.newCachedThreadPool();
-		List<CrawllingTargetDomain> crawllingTargets = cJobService.getAllCrawllingTargets();
-		List<FutureData> fPool = new ArrayList<>();
+		List<CrawDomainEntity> crawllingTargets = cJobService.getAllCrawllingTargets();
+		List<FutureDataVo> fPool = new ArrayList<>();
 
-		for (CrawllingTargetDomain cTarget : crawllingTargets) {
+		for (CrawDomainEntity cTarget : crawllingTargets) {
 
 			switch (cTarget.getCrawNo()) {
 
 			case 1:
-				Future<List<CrawllingRawDataDomain>> f1 = exePool.submit(new RuriwebParser(cTarget));
-				fPool.add(new FutureData(f1, cTarget));
+				Future<List<CrawRawDataEntity>> f1 = exePool.submit(new RuriwebParser(cTarget));
+				fPool.add(new FutureDataVo(f1, cTarget));
 				break;
 
 			case 2:
-				Future<List<CrawllingRawDataDomain>> f2 = exePool.submit(new CoolenjoyNewsParser(cTarget));
-				fPool.add(new FutureData(f2, cTarget));
+				Future<List<CrawRawDataEntity>> f2 = exePool.submit(new CoolenjoyNewsParser(cTarget));
+				fPool.add(new FutureDataVo(f2, cTarget));
 				break;
 			case 3:
-				Future<List<CrawllingRawDataDomain>> f3 = exePool.submit(new CoolenjoyTukgaParser(cTarget));
-				fPool.add(new FutureData(f3, cTarget));
+				Future<List<CrawRawDataEntity>> f3 = exePool.submit(new CoolenjoyTukgaParser(cTarget));
+				fPool.add(new FutureDataVo(f3, cTarget));
 				break;
 
 			case 4:
 
-				Future<List<CrawllingRawDataDomain>> f4 = exePool.submit(new PpompuParser(cTarget));
-				fPool.add(new FutureData(f4, cTarget));
+				Future<List<CrawRawDataEntity>> f4 = exePool.submit(new PpompuParser(cTarget));
+				fPool.add(new FutureDataVo(f4, cTarget));
 				break;
 
 			case 5:
 
-				Future<List<CrawllingRawDataDomain>> f5 = exePool.submit(new PpompuParser(cTarget));
-				fPool.add(new FutureData(f5, cTarget));
+				Future<List<CrawRawDataEntity>> f5 = exePool.submit(new PpompuParser(cTarget));
+				fPool.add(new FutureDataVo(f5, cTarget));
 				break;
 			case 6:
 
-				Future<List<CrawllingRawDataDomain>> f6 = exePool.submit(new YepannetParser(cTarget));
-				fPool.add(new FutureData(f6, cTarget));
+				Future<List<CrawRawDataEntity>> f6 = exePool.submit(new YepannetParser(cTarget));
+				fPool.add(new FutureDataVo(f6, cTarget));
 				break;
 			case 7:
 
-				Future<List<CrawllingRawDataDomain>> f7 = exePool.submit(new YepannetParser(cTarget));
-				fPool.add(new FutureData(f7, cTarget));
+				Future<List<CrawRawDataEntity>> f7 = exePool.submit(new YepannetParser(cTarget));
+				fPool.add(new FutureDataVo(f7, cTarget));
 				break;
 			default:
 				break;
@@ -82,23 +82,23 @@ public class JobWorker {
 
 		}
 
-		for (FutureData f : fPool) {
+		for (FutureDataVo f : fPool) {
 			checkLastBoardNo(f);
 		}
 
 	}
 
-	private void checkLastBoardNo(FutureData fObject) {
+	private void checkLastBoardNo(FutureDataVo fObject) {
 
-		CrawllingTargetDomain cDomain = fObject.getCDomain();
+		CrawDomainEntity cDomain = fObject.getCDomain();
 		Integer crawNo = cDomain.getCrawNo();
 		Integer lastBoardNo = cJobService.getLastBoardNo(crawNo);
 
 		try {
-			List<CrawllingRawDataDomain> l = fObject.getFuture().get(3, TimeUnit.MINUTES);
+			List<CrawRawDataEntity> l = fObject.getFuture().get(3, TimeUnit.MINUTES);
 
 			int findCound = 0;
-			for (CrawllingRawDataDomain cRawData : l) {
+			for (CrawRawDataEntity cRawData : l) {
 				if (cRawData.getBoardNo() > lastBoardNo) {
 					findCound++;
 					cJobService.saveCrawllingRawData(cRawData);

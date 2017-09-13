@@ -16,31 +16,32 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.glqdlt.persistence.data.CrawllingRawDataDomain;
-import com.glqdlt.persistence.data.CrawllingTargetDomain;
-import com.glqdlt.persistence.service.CrawllingJobService;
+import com.glqdlt.persistence.entity.CrawRawDataEntity;
+import com.glqdlt.crawling.jsoup.utill.ParserUtill;
+import com.glqdlt.persistence.entity.CrawDomainEntity;
+import com.glqdlt.persistence.service.CrawDataService;
 
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 @Component
-public class YepannetParser extends ParserUtill implements Callable<List<CrawllingRawDataDomain>> {
+public class YepannetParser extends ParserUtill implements Callable<List<CrawRawDataEntity>> {
 
 	@Autowired
-	CrawllingJobService cService;
+	CrawDataService cService;
 
-	private CrawllingTargetDomain cDomain;
+	private CrawDomainEntity cDomain;
 
 	private static final Logger log = LoggerFactory.getLogger(YepannetParser.class);
 
-	public YepannetParser(CrawllingTargetDomain cDomain) {
+	public YepannetParser(CrawDomainEntity cDomain) {
 		this.cDomain = cDomain;
 	}
 
 	@Override
-	public List<CrawllingRawDataDomain> startJob(CrawllingTargetDomain cDomain) {
+	public List<CrawRawDataEntity> startJob(CrawDomainEntity cDomain) {
 
-		List<CrawllingRawDataDomain> list = new ArrayList<CrawllingRawDataDomain>();
+		List<CrawRawDataEntity> list = new ArrayList<CrawRawDataEntity>();
 
 		int lastBoardNo = 1;
 
@@ -52,7 +53,7 @@ public class YepannetParser extends ParserUtill implements Callable<List<Crawlli
 			Document doc = Jsoup.connect(cDomain.getUrl()).get();
 			Elements el = doc.select("tr[align=center]");
 			for (Element element : el) {
-				CrawllingRawDataDomain crawObj = new CrawllingRawDataDomain();
+				CrawRawDataEntity crawObj = new CrawRawDataEntity();
 
 				link = element.getElementsByClass("mw_basic_list_thumb").select("a[href]").attr("href");
 
@@ -114,7 +115,7 @@ public class YepannetParser extends ParserUtill implements Callable<List<Crawlli
 	}
 
 	@Override
-	public List<CrawllingRawDataDomain> call() throws Exception {
+	public List<CrawRawDataEntity> call() throws Exception {
 		return startJob(cDomain);
 	}
 }

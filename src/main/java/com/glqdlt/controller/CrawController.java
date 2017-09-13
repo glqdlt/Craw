@@ -9,19 +9,19 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.glqdlt.crawlling.service.JobManager;
 import com.glqdlt.crawlling.service.JobStatus;
-import com.glqdlt.persistence.data.CrawllingStatusObject;
+import com.glqdlt.persistence.vo.CrawStatusVo;
 
 @RequestMapping(value = "/crawlling/system")
 @RestController
-public class CrawllingController {
+public class CrawController {
 
 	@Autowired
 	JobManager cMom;
 
 	@ResponseStatus(code = HttpStatus.BAD_REQUEST)
 	@RequestMapping(value = "/status")
-	public CrawllingStatusObject getStatus() {
-		CrawllingStatusObject cObj = new CrawllingStatusObject();
+	public CrawStatusVo getStatus() {
+		CrawStatusVo cObj = new CrawStatusVo();
 		Integer status = 0;
 		if (JobStatus.getInstance().getStatus() != 1) {
 			status = 1;

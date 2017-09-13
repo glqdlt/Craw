@@ -1,4 +1,4 @@
-package com.glqdlt.crawling.jsoup.parsers;
+package com.glqdlt.crawling.jsoup.utill;
 
 import java.io.IOException;
 import java.security.MessageDigest;
@@ -13,15 +13,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-import com.glqdlt.persistence.data.CrawllingRawDataDomain;
-import com.glqdlt.persistence.data.CrawllingTargetDomain;
+import com.glqdlt.persistence.entity.CrawRawDataEntity;
+import com.glqdlt.persistence.entity.CrawDomainEntity;
 
 @Component
 public abstract class ParserUtill {
 
 	private static final Logger log = LoggerFactory.getLogger(ParserUtill.class);
 
-	public abstract List<CrawllingRawDataDomain> startJob(CrawllingTargetDomain cDomain);
+	public abstract List<CrawRawDataEntity> startJob(CrawDomainEntity cDomain);
 
 	protected void checkNewHash() {
 
@@ -74,7 +74,7 @@ public abstract class ParserUtill {
 		return fm1.format(new Date());
 	}
 
-	protected void setCommonData(CrawllingRawDataDomain crawObj, CrawllingTargetDomain cDomain) {
+	protected void setCommonData(CrawRawDataEntity crawObj, CrawDomainEntity cDomain) {
 		crawObj.setDataName(cDomain.getDataName());
 		crawObj.setDataTag(cDomain.getDataTag());
 		crawObj.setSiteName(cDomain.getSiteName());

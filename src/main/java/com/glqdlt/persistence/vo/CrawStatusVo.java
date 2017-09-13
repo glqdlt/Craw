@@ -1,17 +1,17 @@
-package com.glqdlt.persistence.data;
+package com.glqdlt.persistence.vo;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-@NoArgsConstructor
+@AllArgsConstructor
 @ToString
+@NoArgsConstructor
 @Data
-public class ResultDataCount {
+public class CrawStatusVo {
 	
-	private Integer result;
-	private String type;
+	private Integer status;
 	
 
 }

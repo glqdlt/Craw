@@ -16,30 +16,31 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.glqdlt.persistence.data.CrawllingRawDataDomain;
-import com.glqdlt.persistence.data.CrawllingTargetDomain;
-import com.glqdlt.persistence.service.CrawllingJobService;
+import com.glqdlt.persistence.entity.CrawRawDataEntity;
+import com.glqdlt.crawling.jsoup.utill.ParserUtill;
+import com.glqdlt.persistence.entity.CrawDomainEntity;
+import com.glqdlt.persistence.service.CrawDataService;
 
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 @Component
-public class PpompuParser extends ParserUtill implements Callable<List<CrawllingRawDataDomain>> {
+public class PpompuParser extends ParserUtill implements Callable<List<CrawRawDataEntity>> {
 
 	private static final Logger log = LoggerFactory.getLogger(PpompuParser.class);
 
 	
 	@Autowired
-	CrawllingJobService cService;
-	private CrawllingTargetDomain cDomain;
+	CrawDataService cService;
+	private CrawDomainEntity cDomain;
 
-	public PpompuParser(CrawllingTargetDomain cDomain) {
+	public PpompuParser(CrawDomainEntity cDomain) {
 		this.cDomain = cDomain;
 	}
 
 	@Override
-	public List<CrawllingRawDataDomain> startJob(CrawllingTargetDomain cDomain) {
-		List<CrawllingRawDataDomain> list = new ArrayList<CrawllingRawDataDomain>();
+	public List<CrawRawDataEntity> startJob(CrawDomainEntity cDomain) {
+		List<CrawRawDataEntity> list = new ArrayList<CrawRawDataEntity>();
 
 		int last_column_no = 1;
 
@@ -59,7 +60,7 @@ public class PpompuParser extends ParserUtill implements Callable<List<Crawlling
 					log.debug("find '#' break to continue.");
 					continue;
 				}
-				CrawllingRawDataDomain crawObj = new CrawllingRawDataDomain();
+				CrawRawDataEntity crawObj = new CrawRawDataEntity();
 				link = "http://www.ppomppu.co.kr/zboard/" + href;
 				boardNo = boardNoRegex(link);
 
@@ -100,7 +101,7 @@ public class PpompuParser extends ParserUtill implements Callable<List<Crawlling
 	}
 
 	@Override
-	public List<CrawllingRawDataDomain> call() throws Exception {
+	public List<CrawRawDataEntity> call() throws Exception {
 		// TODO Auto-generated method stub
 		return startJob(cDomain);
 	}

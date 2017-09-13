@@ -1,4 +1,4 @@
-package com.glqdlt.persistence.data;
+package com.glqdlt.persistence.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,8 +15,8 @@ import lombok.ToString;
 @ToString
 @Data
 @Entity
-@Table(name = "crawlling_raw_data_tbl")
-public class CrawllingRawDataDomain {
+@Table(name = "craw_rawdata")
+public class CrawRawDataEntity {
 
 	@Id
 	@GeneratedValue

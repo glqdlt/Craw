@@ -14,29 +14,30 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.glqdlt.persistence.data.CrawllingRawDataDomain;
-import com.glqdlt.persistence.data.CrawllingTargetDomain;
-import com.glqdlt.persistence.service.CrawllingJobService;
+import com.glqdlt.persistence.entity.CrawRawDataEntity;
+import com.glqdlt.crawling.jsoup.utill.ParserUtill;
+import com.glqdlt.persistence.entity.CrawDomainEntity;
+import com.glqdlt.persistence.service.CrawDataService;
 
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 @Component
-public class CoolenjoyNewsParser extends ParserUtill implements Callable<List<CrawllingRawDataDomain>> {
+public class CoolenjoyNewsParser extends ParserUtill implements Callable<List<CrawRawDataEntity>> {
 
 	private static final Logger log = LoggerFactory.getLogger(CoolenjoyNewsParser.class);
 
 	@Autowired
-	CrawllingJobService cService;
-	private CrawllingTargetDomain cDomain;
+	CrawDataService cService;
+	private CrawDomainEntity cDomain;
 
-	public CoolenjoyNewsParser(CrawllingTargetDomain cDomain) {
+	public CoolenjoyNewsParser(CrawDomainEntity cDomain) {
 		this.cDomain = cDomain;
 
 	}
 
 	@Override
-	public List<CrawllingRawDataDomain> startJob(CrawllingTargetDomain cDomain) {
+	public List<CrawRawDataEntity> startJob(CrawDomainEntity cDomain) {
 
 		int lastBoardNo = 1;
 		String subject = null;
@@ -44,13 +45,13 @@ public class CoolenjoyNewsParser extends ParserUtill implements Callable<List<Cr
 		String date = null;
 		String boardNo = null;
 
-		List<CrawllingRawDataDomain> list = new ArrayList<CrawllingRawDataDomain>();
+		List<CrawRawDataEntity> list = new ArrayList<CrawRawDataEntity>();
 		try {
 			Document doc = Jsoup.connect(cDomain.getUrl()).get();
 			Elements trElements = doc.getElementsByTag("table").get(0).getElementsByTag("tr");
 
 			for (Element tr : trElements) {
-				CrawllingRawDataDomain crawObj = new CrawllingRawDataDomain();
+				CrawRawDataEntity crawObj = new CrawRawDataEntity();
 				Elements tds = tr.getElementsByTag("td");
 
 				if (tds.hasClass("td_subject")) {
@@ -111,7 +112,7 @@ public class CoolenjoyNewsParser extends ParserUtill implements Callable<List<Cr
 	}
 
 	@Override
-	public List<CrawllingRawDataDomain> call() throws Exception {
+	public List<CrawRawDataEntity> call() throws Exception {
 
 		return startJob(cDomain);
 	}

@@ -1,6 +1,5 @@
 package com.glqdlt.persistence.service;
 
-import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
@@ -12,31 +11,31 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.glqdlt.persistence.data.CrawllingRawDataDomain;
-import com.glqdlt.persistence.data.CrawllingTargetDomain;
-import com.glqdlt.persistence.repository.CrawllingRawDataRepository;
-import com.glqdlt.persistence.repository.CrawllingTargetRepository;
+import com.glqdlt.persistence.entity.CrawRawDataEntity;
+import com.glqdlt.persistence.entity.CrawDomainEntity;
+import com.glqdlt.persistence.repository.CrawRawDataRepository;
+import com.glqdlt.persistence.repository.CrawDomainRepository;
 
 @Service
-public class CrawllingJobService {
+public class CrawDataService {
 
 	@Autowired
-	CrawllingTargetRepository cTargetRepo;
+	CrawDomainRepository cTargetRepo;
 
 	@Autowired
-	CrawllingRawDataRepository cRawDataRepo;
+	CrawRawDataRepository cRawDataRepo;
 
-	private static final Logger log = LoggerFactory.getLogger(CrawllingJobService.class);
+	private static final Logger log = LoggerFactory.getLogger(CrawDataService.class);
 
 	synchronized public Integer getLastBoardNo(Integer craw_no) {
 		Integer resultLastBoardNo = 1;
-		List<CrawllingRawDataDomain> list = cRawDataRepo.findByCrawNo(craw_no);
+		List<CrawRawDataEntity> list = cRawDataRepo.findByCrawNo(craw_no);
 		if (list.size() == 0) {
 			return resultLastBoardNo;
 		}
 		Integer lastBoardNo = 0;
 
-		for (CrawllingRawDataDomain crawllingRawDataDomain : list) {
+		for (CrawRawDataEntity crawllingRawDataDomain : list) {
 
 			if (lastBoardNo == 0) {
 				lastBoardNo = crawllingRawDataDomain.getBoardNo();
@@ -53,17 +52,17 @@ public class CrawllingJobService {
 		return resultLastBoardNo;
 	}
 
-	public List<CrawllingRawDataDomain> getAllRawData() {
+	public List<CrawRawDataEntity> getAllRawData() {
 		return cRawDataRepo.findAll();
 	}
 
-	public List<CrawllingTargetDomain> getAllCrawllingTargets() {
+	public List<CrawDomainEntity> getAllCrawllingTargets() {
 		return cTargetRepo.findAll();
 	}
 
-	public void saveCrawllingRawDataList(Future<List<CrawllingRawDataDomain>> f) {
+	public void saveCrawllingRawDataList(Future<List<CrawRawDataEntity>> f) {
 		try {
-			cRawDataRepo.save(f.get(60, TimeUnit.SECONDS));
+			cRawDataRepo.save(f.get(3, TimeUnit.MINUTES));
 		} catch (InterruptedException | ExecutionException e) {
 			log.error("saveCrawllingRawData error.", e);
 		} catch (TimeoutException e) {
@@ -71,7 +70,7 @@ public class CrawllingJobService {
 		}
 	}
 
-	public void saveCrawllingRawData(CrawllingRawDataDomain cRawData) {
+	public void saveCrawllingRawData(CrawRawDataEntity cRawData) {
 		cRawDataRepo.save(cRawData);
 	}
 

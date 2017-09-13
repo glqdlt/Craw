@@ -14,30 +14,31 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.glqdlt.persistence.data.CrawllingRawDataDomain;
-import com.glqdlt.persistence.data.CrawllingTargetDomain;
-import com.glqdlt.persistence.service.CrawllingJobService;
+import com.glqdlt.persistence.entity.CrawRawDataEntity;
+import com.glqdlt.crawling.jsoup.utill.ParserUtill;
+import com.glqdlt.persistence.entity.CrawDomainEntity;
+import com.glqdlt.persistence.service.CrawDataService;
 
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 @Component
-public class RuriwebParser extends ParserUtill implements Callable<List<CrawllingRawDataDomain>> {
+public class RuriwebParser extends ParserUtill implements Callable<List<CrawRawDataEntity>> {
 
 	private static final Logger log = LoggerFactory.getLogger(RuriwebParser.class);
 
 	
 	@Autowired
-	CrawllingJobService cService;
-	private CrawllingTargetDomain cDomain;
+	CrawDataService cService;
+	private CrawDomainEntity cDomain;
 
-	public RuriwebParser(CrawllingTargetDomain cDomain) {
+	public RuriwebParser(CrawDomainEntity cDomain) {
 		this.cDomain = cDomain;
 	}
 
 	@Override
-	public List<CrawllingRawDataDomain> startJob(CrawllingTargetDomain cDomain) {
-		List<CrawllingRawDataDomain> list = new ArrayList<CrawllingRawDataDomain>();
+	public List<CrawRawDataEntity> startJob(CrawDomainEntity cDomain) {
+		List<CrawRawDataEntity> list = new ArrayList<CrawRawDataEntity>();
 
 		int lastBoardNo = 1;
 
@@ -54,7 +55,7 @@ public class RuriwebParser extends ParserUtill implements Callable<List<Crawllin
 				Elements elements2 = el.getElementsByClass("table_body");
 				for (Element el2 : elements2) {
 					if (el2.className().equals("table_body")) {
-						CrawllingRawDataDomain crawObj = new CrawllingRawDataDomain();
+						CrawRawDataEntity crawObj = new CrawRawDataEntity();
 						link = el.getElementsByClass("subject").get(0).getElementsByClass("deco").attr("href");
 						boardWriteDate = el.getElementsByClass("time").text();
 						subject = el.getElementsByClass("subject").text();
@@ -106,7 +107,7 @@ public class RuriwebParser extends ParserUtill implements Callable<List<Crawllin
 	}
 
 	@Override
-	public List<CrawllingRawDataDomain> call() throws Exception {
+	public List<CrawRawDataEntity> call() throws Exception {
 		return startJob(cDomain);
 	}
 

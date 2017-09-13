@@ -1,6 +1,5 @@
 package com.glqdlt.crawlling.service;
 
-
 public class JobStatus {
 
 	private JobStatus() {
