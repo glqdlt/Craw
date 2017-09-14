@@ -10,6 +10,7 @@ import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
+import org.hibernate.loader.criteria.CriteriaJoinWalker;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -83,38 +84,47 @@ public class JobWorker {
 		}
 
 		for (FutureDataVo f : fPool) {
-			checkLastBoardNo(f);
+			newDataSaver(newDataChecker(f));
 		}
 
 	}
 
-	private void checkLastBoardNo(FutureDataVo fObject) {
+	private List<CrawRawDataEntity> newDataChecker(FutureDataVo fObject) {
 
 		CrawDomainEntity cDomain = fObject.getCDomain();
 		Integer crawNo = cDomain.getCrawNo();
 		Integer lastBoardNo = cJobService.getLastBoardNo(crawNo);
 
+		List<CrawRawDataEntity> newCrawRawDatas = new ArrayList<>();
 		try {
-			List<CrawRawDataEntity> l = fObject.getFuture().get(3, TimeUnit.MINUTES);
+			List<CrawRawDataEntity> crawRawDatas = fObject.getFuture().get(3, TimeUnit.MINUTES);
 
-			int findCound = 0;
-			for (CrawRawDataEntity cRawData : l) {
+			for (CrawRawDataEntity cRawData : crawRawDatas) {
 				if (cRawData.getBoardNo() > lastBoardNo) {
-					findCound++;
-					cJobService.saveCrawllingRawData(cRawData);
+					newCrawRawDatas.add(cRawData);
 				}
 			}
-			if (findCound != 0) {
-				log.debug("Find New Board, " + findCound + " : " + cDomain.getSiteName() + "_" + cDomain.getDataName());
-			} else {
-				log.debug("Not found New Board");
-			}
-
 		} catch (InterruptedException | ExecutionException e) {
 			log.error("Exception..", e);
 		} catch (TimeoutException e) {
 			log.error("timeOut..", e);
 		}
+		return newCrawRawDatas;
+	}
+
+	private void newDataSaver(List<CrawRawDataEntity> newCrawRawData) {
+		int findCount = newCrawRawData.size();
+		if (findCount == 0) {
+			log.debug("Not found New Board");
+			return;
+		} 
+
+		for (CrawRawDataEntity crawRawDataEntity : newCrawRawData) {
+			log.debug("Find New Board, " + findCount + " : " + crawRawDataEntity.getSiteName() + "_"
+					+ crawRawDataEntity.getDataName());
+			cJobService.saveCrawllingRawData(crawRawDataEntity);
+		}
+
 	}
 
 }

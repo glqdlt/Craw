@@ -24,21 +24,20 @@ public class AppInitializer {
 
 	@Autowired
 	CrawDomainRepository cDomainRepo;
-	
+
 	@Autowired
 	JobManager cJobManager;
-
 
 	private static final Logger log = LoggerFactory.getLogger(AppInitializer.class);
 
 	public void initCrawDomainDatas() {
 
 		setUp().forEach(x -> cDomainRepo.save(x));
-		log.info("Boot Init complete to Crawlling Domains.");
+		log.info("Init to Crawlling Domains.");
 
 	}
-	
-	public void startAutoCrawlling(){
+
+	public void startAutoCrawlling() {
 		if (JobStatus.getInstance().getStatus() != 1) {
 			log.info("Start Crawlling Auto Mode.");
 			cJobManager.start();
@@ -48,20 +47,16 @@ public class AppInitializer {
 	private ArrayList<CrawDomainEntity> setUp() {
 
 		ArrayList<CrawDomainEntity> list = new ArrayList<>();
-		list.add(new CrawDomainEntity(1, Ruriweb.target_url, Ruriweb.data_name, Ruriweb.data_tag,
-				Ruriweb.site_name, Ruriweb.site_tag, Ruriweb.craw_type, 1));
-
+		list.add(new CrawDomainEntity(1, Ruriweb.target_url, Ruriweb.data_name, Ruriweb.data_tag, Ruriweb.site_name,
+				Ruriweb.site_tag, Ruriweb.craw_type, 1));
 		list.add(new CrawDomainEntity(2, CoolenjoyNews.target_url, CoolenjoyNews.data_name, CoolenjoyNews.data_tag,
 				CoolenjoyNews.site_name, CoolenjoyNews.site_tag, CoolenjoyNews.craw_type, 1));
-		list.add(new CrawDomainEntity(3, CoolenjoyTukga.target_url, CoolenjoyTukga.data_name,
-				CoolenjoyTukga.data_tag, CoolenjoyTukga.site_name, CoolenjoyTukga.site_tag, CoolenjoyTukga.craw_type,
-				1));
-
+		list.add(new CrawDomainEntity(3, CoolenjoyTukga.target_url, CoolenjoyTukga.data_name, CoolenjoyTukga.data_tag,
+				CoolenjoyTukga.site_name, CoolenjoyTukga.site_tag, CoolenjoyTukga.craw_type, 1));
 		list.add(new CrawDomainEntity(4, PpompuCoupon.target_url, PpompuCoupon.data_name, PpompuCoupon.data_tag,
 				PpompuCoupon.site_name, PpompuCoupon.site_tag, PpompuCoupon.craw_type, 1));
 		list.add(new CrawDomainEntity(5, PpompuTukga.target_url, PpompuTukga.data_name, PpompuTukga.data_tag,
 				PpompuTukga.site_name, PpompuTukga.site_tag, PpompuTukga.craw_type, 1));
-
 		list.add(new CrawDomainEntity(6, YepannetTukga.target_url, YepannetTukga.data_name, YepannetTukga.data_tag,
 				YepannetTukga.site_name, YepannetTukga.site_tag, YepannetTukga.craw_type, 1));
 		list.add(new CrawDomainEntity(7, YepannetYepan.target_url, YepannetYepan.data_name, YepannetYepan.data_tag,

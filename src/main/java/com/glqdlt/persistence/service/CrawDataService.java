@@ -74,4 +74,10 @@ public class CrawDataService {
 		cRawDataRepo.save(cRawData);
 	}
 
+	public List<CrawRawDataEntity> pullCrawNewRawData(List<CrawRawDataEntity> list) {
+
+		return list;
+
+	}
+
 }
