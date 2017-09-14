@@ -68,11 +68,6 @@ public class PpompuParser extends ParserUtill implements Callable<List<CrawRawDa
 				crawObj.setSubject(subject);
 				crawObj.setBoardNo(parserBoardNo(boardNo));
 
-				// crawObj.setData_name(cDomain.getData_name());
-				// crawObj.setData_tag(cDomain.getData_tag());
-				// crawObj.setSite_name(cDomain.getSite_name());
-				// crawObj.setSite_tag(cDomain.getSite_tag());
-				// crawObj.setCraw_no(cDomain.getCraw_no());
 				setCommonData(crawObj, cDomain);
 
 				if (last_column_no < Integer.parseInt(boardNo)) {
