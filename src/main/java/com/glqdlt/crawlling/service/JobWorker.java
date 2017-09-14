@@ -1,6 +1,7 @@
 package com.glqdlt.crawlling.service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
@@ -10,10 +11,10 @@ import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
-import org.hibernate.loader.criteria.CriteriaJoinWalker;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Component;
 
 import com.glqdlt.crawling.jsoup.parsers.CoolenjoyNewsParser;
@@ -26,10 +27,14 @@ import com.glqdlt.persistence.entity.CrawDomainEntity;
 import com.glqdlt.persistence.service.CrawDataService;
 import com.glqdlt.persistence.vo.FutureDataVo;
 
+
 @Component
 public class JobWorker {
 	@Autowired
 	CrawDataService cJobService;
+
+	@Autowired
+	private SimpMessagingTemplate broker;
 
 	private static final Logger log = LoggerFactory.getLogger(JobWorker.class);
 
@@ -84,9 +89,23 @@ public class JobWorker {
 		}
 
 		for (FutureDataVo f : fPool) {
-			newDataSaver(newDataChecker(f));
+			List<CrawRawDataEntity> newDataList = newDataChecker(f);
+
+			newDataSaver(newDataList);
+			broadCaster(newDataList);
 		}
 
+	}
+
+	public void broadCaster(List<CrawRawDataEntity> newCrawDataList) {
+		if (newCrawDataList.size() == 0) {
+			log.debug("broadCast to newcrawDataList is empty. escape.");
+			return;
+		}
+		
+		for (CrawRawDataEntity crawRawDataEntity : newCrawDataList) {
+			broker.convertAndSend("/push/newData", crawRawDataEntity);
+		}
 	}
 
 	private List<CrawRawDataEntity> newDataChecker(FutureDataVo fObject) {
@@ -98,6 +117,8 @@ public class JobWorker {
 		List<CrawRawDataEntity> newCrawRawDatas = new ArrayList<>();
 		try {
 			List<CrawRawDataEntity> crawRawDatas = fObject.getFuture().get(3, TimeUnit.MINUTES);
+//			Order by Desc..
+			Collections.reverse(crawRawDatas);
 
 			for (CrawRawDataEntity cRawData : crawRawDatas) {
 				if (cRawData.getBoardNo() > lastBoardNo) {
@@ -117,7 +138,7 @@ public class JobWorker {
 		if (findCount == 0) {
 			log.debug("Not found New Board");
 			return;
-		} 
+		}
 
 		for (CrawRawDataEntity crawRawDataEntity : newCrawRawData) {
 			log.debug("Find New Board, " + findCount + " : " + crawRawDataEntity.getSiteName() + "_"

@@ -15,8 +15,6 @@ public class ApplicationMain implements CommandLineRunner {
 	@Autowired
 	AppInitializer biService;
 	
-//	private static final Logger log = LoggerFactory.getLogger(ApplicationMain.class);
-
 	public static void main(String[] args) {
 		SpringApplication.run(ApplicationMain.class, args);
 	}

@@ -15,6 +15,8 @@ public class JobManager extends Thread {
 	public void run() {
 		AutoCrawllingMode();
 	}
+	
+	private Integer sleepTime;
 
 	private static final Logger log = LoggerFactory.getLogger(JobManager.class);
 
@@ -28,12 +30,20 @@ public class JobManager extends Thread {
 			log.debug("End Auto Crawlling");
 			try {
 				log.debug("Sleep..");
-				Thread.sleep(600000);
+				Thread.sleep(sleepTime);
 			} catch (InterruptedException e) {
 				log.error("Interpution ex", e);
 			}
 		}
 
+	}
+
+	public Integer getSleepTime() {
+		return sleepTime;
+	}
+
+	synchronized public void setSleepTime(Integer sleepTime) {
+		this.sleepTime = sleepTime;
 	}
 
 }

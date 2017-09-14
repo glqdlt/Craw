@@ -8,7 +8,7 @@ import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBr
 import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
 
 @Configuration
-@EnableScheduling
+//@EnableScheduling
 @EnableWebSocketMessageBroker
 public class WebSocksConfig extends AbstractWebSocketMessageBrokerConfigurer {
 
@@ -26,5 +26,5 @@ public class WebSocksConfig extends AbstractWebSocketMessageBrokerConfigurer {
 		reg.addEndpoint("/webSocks").withSockJS();
 
 	}
-
+	
 }

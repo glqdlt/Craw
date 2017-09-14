@@ -10,13 +10,13 @@ import com.glqdlt.persistence.service.CrawDataService;
 @Component
 public class PushController {
 
-	@Autowired
-	private SimpMessagingTemplate broker;
-	@Autowired
-	CrawDataService cDataService;
+//	@Autowired
+//	private SimpMessagingTemplate broker;
+//	@Autowired
+//	CrawDataService cDataService;
 
-	@Scheduled(fixedDelay = 60000)
-	public void greeting2() throws Exception {
-		broker.convertAndSend("/push/newData", cDataService.getAllRawData());
-	}
+//	@Scheduled(fixedDelay = 30000)
+//	public void broadCaster() throws Exception {
+//		broker.convertAndSend("/push/newData", cDataService.getAllRawData().get(0));
+//	}
 }

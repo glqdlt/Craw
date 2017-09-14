@@ -40,6 +40,7 @@ public class AppInitializer {
 	public void startAutoCrawlling() {
 		if (JobStatus.getInstance().getStatus() != 1) {
 			log.info("Start Crawlling Auto Mode.");
+			cJobManager.setSleepTime(60000);
 			cJobManager.start();
 		}
 	}

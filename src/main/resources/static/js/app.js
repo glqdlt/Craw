@@ -1,5 +1,6 @@
 var stompClient = null;
-
+var dataRow =0;
+var chatRow =0;
 function setConnected(connected) {
     $("#connect").prop("disabled", connected);
     $("#disconnect").prop("disabled", !connected);
@@ -9,7 +10,7 @@ function setConnected(connected) {
     else {
         $("#conversation").hide();
     }
-    $("#dataTable").html("");
+    $("#crawArea").html("");
     $("#chatRoom").html("");
 }
 
@@ -20,10 +21,10 @@ function connect() {
         setConnected(true);
         console.log('Connected: ' + frame);
         stompClient.subscribe('/push/newData', function (newCrawData) {
-            showData(JSON.parse(newCrawData.body));
+            showData(newCrawData.body);
         });
         stompClient.subscribe('/push/chat', function (chat) {
-        	showDataChat(JSON.parse(chat.body).message);
+        	showDataChat(JSON.parse(chat.body));
         });
     });
     
@@ -38,19 +39,32 @@ function disconnect() {
 }
 
 function sendMsg() {
-    stompClient.send("/app/chat", {}, JSON.stringify({'message': $("#message").val()}));
+    
+	stompClient.send("/app/chat", {}, JSON.stringify({'message': $("#message").val()}));
+	
 }
 
 function showData(newCrawData) {
-    $("#dataTable").append("<tr><td>" + newCrawData + "</td></tr>");
+	dataRow++;
+	if(dataRow > 19){
+		$("#crawArea td:last").remove();
+	}
+    $("#crawArea").prepend("<tr><td>" + newCrawData + "</td></tr>");
 }
-function showDataChat(message) {
-	$("#chatRoom").append("<tr><td>" + message + "</td></tr>");
+
+function showDataChat(chatObj) {
+	chatRow++;
+	if(chatRow > 9){
+		$("#chatRoom td:last").remove();
+	}
+	$("#chatRoom").prepend("<tr><td>" + chatObj.message+ "</td></tr>");
 }
 
 $(function () {
 	connect();
     $("form").on('submit', function (e) {
+    	$("#message").val("");
+    	$("#message").click();
         e.preventDefault();
     });
     $( "#connect" ).click(function() { connect(); });

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Hello WebSocket</title>
+<title>Natsna ver 0.0.1</title>
 <link href="/webjars/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 <script src="/webjars/jquery/jquery.min.js"></script>
 <script src="/webjars/sockjs-client/sockjs.min.js"></script>
@@ -27,32 +27,40 @@
 				</form>
 			</div>
 			<div class="col-md-6">
-				<form class="form-inline">
+				<form class="form-inline" name="chatForm">
 					<div class="form-group">
-						<label for="message">Message Box:</label> <input type="text"
-							id="message" class="form-control" placeholder="Input Message..">
+					
+						<!-- 
+						<label for="username">username :</label> 
+						<input type="text"	id="username" class="form-control" placeholder="Input Message..">
+						 -->
+						
+						<label for="message">Message :</label> 
+						<input type="text"	id="message" class="form-control" placeholder="Input Message..">
 					</div>
-					<button id="send" class="btn btn-default" type="submit">Send</button>
+					<button id="send" class="btn btn-primary" type="submit">Send</button>
 				</form>
 			</div>
 		</div>
 		<div class="row">
 			<div class="col-md-12">
 				<table id="conversation" class="table table-striped">
-					<thead>
-						<tr>
-							<th>New Crawlling Data</th>
-						</tr>
-					</thead>
-					<tbody id="dataTable">
-					</tbody>
-
+				
+				
 					<thead>
 						<tr>
 							<th>Chat Room</th>
 						</tr>
 					</thead>
 					<tbody id="chatRoom">
+					</tbody>
+				
+					<thead>
+						<tr>
+							<th>Crawlling Area</th>
+						</tr>
+					</thead>
+					<tbody id="crawArea">
 					</tbody>
 				</table>
 			</div>
