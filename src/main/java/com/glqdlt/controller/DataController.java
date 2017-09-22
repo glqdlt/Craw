@@ -1,5 +1,6 @@
 package com.glqdlt.controller;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,10 @@ public class DataController {
 	@RequestMapping(value = "/data/all")
 	public List<CrawRawDataEntity> getDataAll() {
 
-		return cJobService.getAllRawData();
+		List<CrawRawDataEntity> result = cJobService.getAllRawData();
+		Collections.reverse(result);
+
+		return result;
 	}
 
 	@RequestMapping(value = "/count/all")
