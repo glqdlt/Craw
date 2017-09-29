@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -22,7 +23,8 @@ public abstract class ParserUtill {
 	private static final Logger log = LoggerFactory.getLogger(ParserUtill.class);
 
 	public abstract List<CrawRawDataEntity> startJob(CrawDomainEntity cDomain);
-
+	
+	
 	protected void checkNewHash() {
 
 		Document doc = null;
@@ -80,7 +82,7 @@ public abstract class ParserUtill {
 		crawObj.setSiteName(cDomain.getSiteName());
 		crawObj.setSiteTag(cDomain.getSiteTag());
 		crawObj.setCrawNo(cDomain.getCrawNo());
-
+		crawObj.setCreatedTime(new Date());
 	}
 	
 	protected Integer parserBoardNo(String boardNo){

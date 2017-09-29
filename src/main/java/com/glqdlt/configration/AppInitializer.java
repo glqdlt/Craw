@@ -16,6 +16,7 @@ import com.glqdlt.crawling.domain.YepannetTukga;
 import com.glqdlt.crawling.domain.YepannetYepan;
 import com.glqdlt.crawlling.service.JobManager;
 import com.glqdlt.crawlling.service.JobStatus;
+import com.glqdlt.crawlling.service.TestModeManager;
 import com.glqdlt.persistence.entity.CrawDomainEntity;
 import com.glqdlt.persistence.repository.CrawDomainRepository;
 
@@ -28,6 +29,9 @@ public class AppInitializer {
 	@Autowired
 	JobManager cJobManager;
 
+	@Autowired
+	TestModeManager tModeManager;
+
 	private static final Logger log = LoggerFactory.getLogger(AppInitializer.class);
 
 	public void initCrawDomainDatas() {
@@ -37,11 +41,17 @@ public class AppInitializer {
 
 	}
 
-	public void startAutoCrawlling() {
+	public void startAutoCrawlling(int delay) {
 		if (JobStatus.getInstance().getStatus() != 1) {
 			log.info("Start Crawlling Auto Mode.");
-			cJobManager.setSleepTime(60000);
+			cJobManager.setSleepTime(delay);
 			cJobManager.start();
+		}
+	}
+
+	public void startTestMode() {
+		if (JobStatus.getInstance().getTestMode() == 1) {
+			tModeManager.start();
 		}
 	}
 

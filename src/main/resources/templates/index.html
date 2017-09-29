@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <title>Natsna ver 0.0.1</title>
-<link href="/webjars/bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
+<link href="/webjars/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
 <script src="/webjars/jquery/jquery.min.js"></script>
 <script src="/webjars/sockjs-client/sockjs.min.js"></script>
 <script src="/webjars/stomp-websocket/stomp.min.js"></script>
@@ -29,14 +29,14 @@
 			<div class="col-md-6">
 				<form class="form-inline" name="chatForm">
 					<div class="form-group">
-					
+
 						<!-- 
 						<label for="username">username :</label> 
 						<input type="text"	id="username" class="form-control" placeholder="Input Message..">
 						 -->
-						
-						<label for="message">Message :</label> 
-						<input type="text"	id="message" class="form-control" placeholder="Input Message.."/>
+
+						<label for="message">Message :</label> <input type="text"
+							id="message" class="form-control" placeholder="Input Message.." />
 					</div>
 					<button id="send" class="btn btn-primary" type="submit">Send</button>
 				</form>
@@ -45,40 +45,61 @@
 		<div class="row">
 			<div class="col-md-12">
 				<table id="conversation" class="table table-striped">
-				
-				
+
+
 					<thead>
 						<tr>
-							<th>Chat Room (live)</th>
+							<th>Chat Room</th>
 						</tr>
 					</thead>
 					<tbody id="chatRoom">
 					</tbody>
-				
+
 					<thead>
 						<tr>
-							<th>New Crawlling (live)</th>
+							<th colspan="6">Live Notification</th>
+						</tr>
+						<tr>
+							<td>No</td>
+							<td>Site</td>
+							<td>Time</td>
+							<td>Subject</td>
+							<td>WriteTime</td>
+							<td>Link</td>
 						</tr>
 					</thead>
 					<tbody id="crawArea">
+
 					</tbody>
 				</table>
+
+
 				<table id="conversation" class="table table-striped">
-						<thead>
+					<thead>
 						<tr>
-						<th colspan="5">All Crawlling (Key 'F5' Push, Refresh)</th>
+							<th colspan="6">Crawlling Board</th>
 						</tr>
-							</thead>
-					<tbody id="crawAll" th:each="l:${list}">
-					
-					<tr>
-					<td th:text="${l.no}"/>
-					<td th:text="${l.siteName}"/>
-					<td th:text="${l.subject}"/>
-					<td th:text="${l.boardWriteDate}"/>
-					<td><a th:href="${l.link}" target="blank">[link]</a></td>
-					</tr>
-					
+						<tr>
+							<td>No</td>
+							<td>Site</td>
+							<td>Time</td>
+							<td>Subject</td>
+							<td>WriteTime</td>
+							<td>Link</td>
+						</tr>
+					</thead>
+
+					<tbody id="crawAll">
+
+						<tr th:each="l:${list}">
+							<td th:text="${l.no}" />
+							<td th:text="${l.siteName}" />
+							<td th:text="${#dates.format(l.createdTime,'yyyy-MM-dd HH:mm')}" />
+							<td th:text="${l.subject}" />
+							<td th:text="${l.boardWriteDate}" />
+							<td><a th:href="${l.link}" target="blank">[link]</a></td>
+						</tr>
+
 					</tbody>
 				</table>
 			</div>

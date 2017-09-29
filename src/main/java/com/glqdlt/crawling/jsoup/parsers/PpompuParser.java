@@ -67,7 +67,7 @@ public class PpompuParser extends ParserUtill implements Callable<List<CrawRawDa
 				crawObj.setLink(link);
 				crawObj.setSubject(subject);
 				crawObj.setBoardNo(parserBoardNo(boardNo));
-
+				
 				setCommonData(crawObj, cDomain);
 
 				if (last_column_no < Integer.parseInt(boardNo)) {
@@ -79,6 +79,10 @@ public class PpompuParser extends ParserUtill implements Callable<List<CrawRawDa
 		}
 		return list;
 
+	}
+	
+	private String deleteReply(){
+		return null;
 	}
 
 	private String boardNoRegex(String link) {

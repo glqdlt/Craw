@@ -6,9 +6,8 @@ public class JobStatus {
 		status = 0;
 	}
 
-	private static JobStatus ins;
-
 	private Integer status;
+	private Integer testMode;
 
 	public synchronized Integer getStatus() {
 		return status;
@@ -19,11 +18,22 @@ public class JobStatus {
 	}
 
 	public static JobStatus getInstance() {
-		if (ins == null) {
-			ins = new JobStatus();
-		}
 
-		return ins;
+		return LazyHolder.ins;
+	}
+
+	public synchronized Integer getTestMode() {
+		return testMode;
+	}
+
+	public synchronized void setTestMode(Integer testMode) {
+		this.testMode = testMode;
+	}
+
+	static class LazyHolder {
+
+		public static final JobStatus ins = new JobStatus();
+
 	}
 
 }

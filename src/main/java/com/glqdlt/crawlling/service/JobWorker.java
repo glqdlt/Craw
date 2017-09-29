@@ -2,6 +2,7 @@ package com.glqdlt.crawlling.service;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
@@ -26,7 +27,6 @@ import com.glqdlt.persistence.entity.CrawRawDataEntity;
 import com.glqdlt.persistence.entity.CrawDomainEntity;
 import com.glqdlt.persistence.service.CrawDataService;
 import com.glqdlt.persistence.vo.FutureDataVo;
-
 
 @Component
 public class JobWorker {
@@ -93,6 +93,7 @@ public class JobWorker {
 
 			newDataSaver(newDataList);
 			broadCaster(newDataList);
+			
 		}
 
 	}
@@ -102,7 +103,7 @@ public class JobWorker {
 			log.debug("broadCast to newcrawDataList is empty. escape.");
 			return;
 		}
-		
+
 		for (CrawRawDataEntity crawRawDataEntity : newCrawDataList) {
 			broker.convertAndSend("/push/newData", crawRawDataEntity);
 		}
@@ -117,7 +118,7 @@ public class JobWorker {
 		List<CrawRawDataEntity> newCrawRawDatas = new ArrayList<>();
 		try {
 			List<CrawRawDataEntity> crawRawDatas = fObject.getFuture().get(3, TimeUnit.MINUTES);
-//			Order by Desc..
+			// Order by Desc..
 			Collections.reverse(crawRawDatas);
 
 			for (CrawRawDataEntity cRawData : crawRawDatas) {

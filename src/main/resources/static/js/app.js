@@ -21,7 +21,7 @@ function connect() {
         setConnected(true);
         console.log('Connected: ' + frame);
         stompClient.subscribe('/push/newData', function (newCrawData) {
-            showData(newCrawData.body);
+            showData(JSON.parse(newCrawData.body));
         });
         stompClient.subscribe('/push/chat', function (chat) {
         	showDataChat(JSON.parse(chat.body));
@@ -49,7 +49,14 @@ function showData(newCrawData) {
 	if(dataRow > 19){
 		$("#crawArea td:last").remove();
 	}
-    $("#crawArea").prepend("<tr><td>" + newCrawData + "</td></tr>");
+    $("#crawArea").prepend(
+    		"<tr><td>" + newCrawData.no + "</td>" +
+    		"<td>" + newCrawData.siteName + "</td>" +
+    		"<td>" + newCrawData.createdTime + "</td>" +
+    		"<td>" + newCrawData.subject + "</td>" + 
+    		"<td>" + newCrawData.boardWriteDate + "</td>" +
+    		"<td>" +"<a href='" +newCrawData.link + "'>[link]</a></td></tr>" 
+    		);
 }
 
 function showDataChat(chatObj) {

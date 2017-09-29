@@ -1,9 +1,16 @@
 package com.glqdlt.persistence.entity;
 
+import java.time.LocalDateTime;
+import java.util.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import org.springframework.data.annotation.CreatedDate;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -31,5 +38,9 @@ public class CrawRawDataEntity {
 	private Integer siteTag;
 	private String dataName;
 	private String siteName;
+	
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date createdTime;
+	
 
 }
