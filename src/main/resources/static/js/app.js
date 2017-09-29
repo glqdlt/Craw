@@ -67,6 +67,7 @@ function showDataChat(chatObj) {
 	$("#chatRoom").prepend("<tr><td>" + chatObj.message+ "</td></tr>");
 }
 
+
 $(function () {
 	connect();
     $("form").on('submit', function (e) {
